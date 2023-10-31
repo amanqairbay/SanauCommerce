@@ -1,8 +1,9 @@
-var builder = WebApplication.CreateBuilder(args);
+using Catalog.API.Extensions;
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-var app = builder.Build();
+WebApplication.CreateBuilder(args)
+    .ConfigureServices()
+    .Build()
+    .ConfigureMiddlewares()
+    .Run();
 
-app.MapGet("/", () => "Hello World!");
-
-app.Run();
+// Location: Catalog.API

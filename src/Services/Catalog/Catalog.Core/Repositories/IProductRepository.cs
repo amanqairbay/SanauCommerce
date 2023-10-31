@@ -15,7 +15,7 @@ public interface IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the products.
     /// </returns>
-    Task<IEnumerable<Product>> GetProductsAsync();
+    Task<IReadOnlyList<Product>> GetProductsAsync();
 
     /// <summary>
     /// Gets paged products.
@@ -45,7 +45,7 @@ public interface IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    Task<IEnumerable<Product>> GetProductByNameAsync(string name);
+    Task<IReadOnlyList<Product>> GetProductByNameAsync(string name);
 
     /// <summary>
     /// Gets the product by category.
@@ -55,26 +55,26 @@ public interface IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    Task<IEnumerable<Product>> GetProductByCategoryAsync(string categoryName);
+    Task<IReadOnlyList<Product>> GetProductByCategoryAsync(string categoryName);
 
     /// <summary>
     /// Creates a new product.
     /// </summary>
     /// <param name="product">Product.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    Task CreateProduct(Product product);
+    Task<Product> CreateProductAsync(Product product);
 
     /// <summary>
     /// Updates a product.
     /// </summary>
     /// <param name="product">Product.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    Task<bool> UpdateProduct(Product product);
+    Task<bool> UpdateProductAsync(Product product);
 
     /// <summary>
     /// Deletes a product.
     /// </summary>
     /// <param name="id">Product identifier.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    Task<bool> DeleteProduct(string id);
+    Task<bool> DeleteProductAsync(string id);
 }

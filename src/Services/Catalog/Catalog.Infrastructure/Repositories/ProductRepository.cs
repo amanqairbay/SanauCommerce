@@ -26,7 +26,7 @@ public class ProductRepository : IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the products.
     /// </returns>
-    public async Task<IEnumerable<Product>> GetProductsAsync() =>
+    public async Task<IReadOnlyList<Product>> GetProductsAsync() =>
         await _context
             .Products
             .Find(p => true)
@@ -123,7 +123,7 @@ public class ProductRepository : IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    public async Task<IEnumerable<Product>> GetProductByNameAsync(string name)
+    public async Task<IReadOnlyList<Product>> GetProductByNameAsync(string name)
     {
         FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Name, name);
         
@@ -141,7 +141,7 @@ public class ProductRepository : IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    public async Task<IEnumerable<Product>> GetProductByCategoryAsync(string categoryName)
+    public async Task<IReadOnlyList<Product>> GetProductByCategoryAsync(string categoryName)
     {
         FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Category, categoryName);
         
@@ -156,15 +156,19 @@ public class ProductRepository : IProductRepository
     /// </summary>
     /// <param name="product">Product.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    public async Task CreateProduct(Product product) =>
+    public async Task<Product> CreateProductAsync(Product product) 
+    {
         await _context.Products.InsertOneAsync(product);
+
+        return product;
+    }
 
     /// <summary>
     /// Updates a product.
     /// </summary>
     /// <param name="product">Product.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    public async Task<bool> UpdateProduct(Product product)
+    public async Task<bool> UpdateProductAsync(Product product)
     {
         var updateResult = await _context.Products.ReplaceOneAsync(filter: g => g.Id == product.Id, replacement: product);
 
@@ -176,7 +180,7 @@ public class ProductRepository : IProductRepository
     /// </summary>
     /// <param name="id">Product identifier.</param>
     /// <returns> A task that represents the asynchronous operation.</returns>
-    public async Task<bool> DeleteProduct(string id)
+    public async Task<bool> DeleteProductAsync(string id)
     {
         FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Id, id);
 

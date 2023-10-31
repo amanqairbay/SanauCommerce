@@ -1,4 +1,5 @@
 using AutoMapper;
+using Catalog.Application.Commands;
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;
 using Catalog.Core.RequestFeatures;
@@ -13,6 +14,8 @@ public class CatalogProfile : Profile
     public CatalogProfile()
     {
         CreateMap<Product, ProductResponse>().ReverseMap();
-        CreateMap<Pagination<Product>, Pagination<ProductResponse>>().ReverseMap(); 
+        CreateMap<Pagination<Product>, Pagination<ProductResponse>>().ReverseMap();
+        CreateMap<Product, CreateProductCommand>().ReverseMap();
+        CreateMap<Product, UpdateProductCommand>().ReverseMap();
     }
 }
