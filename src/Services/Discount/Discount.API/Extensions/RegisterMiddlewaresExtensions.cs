@@ -1,7 +1,8 @@
+using Discount.Infrastructure.Extensions;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
-namespace Catalog.API.Extensions;
+namespace Discount.API.Extensions;
 
 /// <summary>
 /// Represents a registry of middlewares.
@@ -21,17 +22,16 @@ public static class RegisterMiddlewaresExtensions
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog.API v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Discount.API v1"));
         }
 
-        app.UseHttpsRedirection();
         app.UseRouting();
 
         #pragma warning disable ASP0014 // Suggest using top level route registrations
-        app.UseEndpoints(cfg =>
+        app.UseEndpoints(endpoints =>
         {
-            cfg.MapControllers();
-            cfg.MapHealthChecks("/health", new HealthCheckOptions
+            endpoints.MapControllers();
+            endpoints.MapHealthChecks("/health", new HealthCheckOptions()
             {
                 Predicate = _ => true,
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
@@ -39,6 +39,8 @@ public static class RegisterMiddlewaresExtensions
         });
         #pragma warning restore ASP0014 // Suggest using top level route registrations
 
+        app.MigrateDatabase<Program>();
+        
         return app;
     }
 }
