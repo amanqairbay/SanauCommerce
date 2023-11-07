@@ -19,7 +19,7 @@ public class DiscountController : ApiController
     // GET: api/v1/[controller]/productName
     [HttpGet("{productName}", Name = "GetDiscount")]
     [ProducesResponseType(typeof(CouponResponse), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<CouponResponse>> GetDiscountAsync(string productName)
+    public async Task<IActionResult> GetDiscountAsync(string productName)
     {
         var couponResponse = await _mediator.Send(new GetDiscountQuery(productName));
         
@@ -29,7 +29,7 @@ public class DiscountController : ApiController
     // POST: api/v1/[controller]
     [HttpPost]
     [ProducesResponseType(typeof(CouponResponse), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<CouponResponse>> CreateDiscountAsync([FromBody] CreateDiscountCommand command)
+    public async Task<IActionResult> CreateDiscountAsync([FromBody] CreateDiscountCommand command)
     {
         var couponResponse = await _mediator.Send(command);
 
@@ -39,7 +39,7 @@ public class DiscountController : ApiController
     // PUT: api/v1/[controller]
     [HttpPut]
     [ProducesResponseType(typeof(CouponResponse), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult<CouponResponse>> UpdateDiscountAsync([FromBody] UpdateDiscountCommand command)
+    public async Task<IActionResult> UpdateDiscountAsync([FromBody] UpdateDiscountCommand command)
     {
         var couponResponse = await _mediator.Send(command);
 

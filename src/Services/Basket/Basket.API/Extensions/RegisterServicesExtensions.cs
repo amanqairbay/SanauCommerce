@@ -1,7 +1,9 @@
+using Basket.Application.GrpcServices;
 using Basket.Application.Handlers;
 using Basket.Application.Mappers;
 using Basket.Core.Repositories;
 using Basket.Infrastructure.Repositories;
+using Discount.GrpcServer.Protos;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 
@@ -22,8 +24,10 @@ public static class RegisterServicesExtensions
     public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddApiVersioning();
-        builder.Services.AddScoped<IBasketRepository, BasketRepository>();
         builder.Services.AddAutoMapper(typeof(BasketProfile));
+        builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+        builder.Services.AddScoped<DiscountGrpcService>();
+        builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opt => opt.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!));
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateBasketHandler).Assembly));
         builder.Services.AddSwaggerGen(opt => opt.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket.API", Version = "v1" }));
         builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString"); });

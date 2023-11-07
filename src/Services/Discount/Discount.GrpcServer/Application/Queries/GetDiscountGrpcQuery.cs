@@ -21,7 +21,11 @@ public class GetDiscountGrpcQuery : IRequest<CouponModel>
         ProductName = productName;
     }
 
-    // nested class
+    #region nested class CreateDiscountGrpcHandler
+
+    /// <summary>
+    /// Represents a get discount handler.
+    /// </summary>
     public class GetDiscountGrpcQueryHandler : IRequestHandler<GetDiscountGrpcQuery, CouponModel>
     {
         private readonly IDiscountRepository _discountRepository;
@@ -53,4 +57,6 @@ public class GetDiscountGrpcQuery : IRequest<CouponModel>
             return couponModel;
         }
     }
+
+    #endregion nested class CreateDiscountGrpcHandler
 }

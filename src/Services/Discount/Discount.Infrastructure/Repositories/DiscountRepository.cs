@@ -6,6 +6,9 @@ using Npgsql;
 
 namespace Discount.Infrastructure.Repositories;
 
+/// <summary>
+/// Represents a discount repository.
+/// </summary>
 public class DiscountRepository : IDiscountRepository
 {
     private readonly IConfiguration _configuration;

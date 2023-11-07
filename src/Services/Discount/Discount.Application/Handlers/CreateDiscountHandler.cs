@@ -20,7 +20,7 @@ public class CreateDiscountHandler : IRequestHandler<CreateDiscountCommand, Coup
     }
 
     /// <summary>
-    /// Handles a request.
+    /// Handles a command.
     /// </summary>
     /// <param name="command">Command for creating a discount.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
