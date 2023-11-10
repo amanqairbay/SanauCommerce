@@ -1,4 +1,4 @@
-using Discount.GrpcServer.Protos;
+using Discount.Grpc.Protos;
 
 namespace Basket.Application.GrpcServices;
 

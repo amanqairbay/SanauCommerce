@@ -3,7 +3,7 @@ using Basket.Application.Handlers;
 using Basket.Application.Mappers;
 using Basket.Core.Repositories;
 using Basket.Infrastructure.Repositories;
-using Discount.GrpcServer.Protos;
+using Discount.Grpc.Protos;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.OpenApi.Models;
 

@@ -1,9 +1,43 @@
 using Discount.API.Extensions;
+using Discount.API.Repositories;
+using Discount.Infrastructure.Repositories;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.OpenApi.Models;
 
-WebApplication.CreateBuilder(args)
-    .ConfigureServices()
-    .Build()
-    .ConfigureMiddlewares()
-    .Run();
+var builder = WebApplication.CreateBuilder(args);
 
-// Location: Discount.API
+builder.Services.AddApiVersioning();
+builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
+builder.Services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Discount.API", Version = "v1" }); });
+builder.Services.AddHealthChecks().AddNpgSql(builder.Configuration["DatabaseSettings:ConnectionString"]!);
+builder.Services.AddControllers();
+      
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Discount.API v1"));
+}
+
+app.UseRouting();
+
+#pragma warning disable ASP0014 // Suggest using top level route registrations
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHealthChecks("/health", new HealthCheckOptions()
+    {
+        Predicate = _ => true,
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
+});
+
+#pragma warning restore ASP0014 // Suggest using top level route registrations
+
+app.MigrateDatabase<Program>();
+
+app.Run();

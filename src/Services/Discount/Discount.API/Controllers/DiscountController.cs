@@ -1,58 +1,49 @@
 using System.Net;
-using Discount.Application.Commands;
-using Discount.Application.Queries;
-using MediatR;
+using Discount.API.Entities;
+using Discount.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Discount.Application.Responses;
 
 namespace Discount.API.Controllers;
 
-public class DiscountController : ApiController
+[ApiController]
+[ApiVersion("1")]
+[Route("api/v{version:apiVersion}/[controller]")]
+public class DiscountController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    private readonly IDiscountRepository _discountRepository;
 
-    public DiscountController(IMediator mediator)
+    public DiscountController(IDiscountRepository discountRepository)
     {
-        _mediator = mediator;
+        _discountRepository = discountRepository ?? throw new ArgumentNullException(nameof(discountRepository));
     }
 
-    // GET: api/v1/[controller]/productName
     [HttpGet("{productName}", Name = "GetDiscount")]
-    [ProducesResponseType(typeof(CouponResponse), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> GetDiscountAsync(string productName)
+    [ProducesResponseType(typeof(Coupon), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<Coupon>> GetDiscountAsync(string productName)
     {
-        var couponResponse = await _mediator.Send(new GetDiscountQuery(productName));
-        
-        return Ok(couponResponse);
+        var discount = await _discountRepository.GetDiscountAsync(productName);
+        return Ok(discount);
     }
 
-    // POST: api/v1/[controller]
     [HttpPost]
-    [ProducesResponseType(typeof(CouponResponse), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> CreateDiscountAsync([FromBody] CreateDiscountCommand command)
+    [ProducesResponseType(typeof(Coupon), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<Coupon>> CreateDiscountAsync([FromBody] Coupon coupon)
     {
-        var couponResponse = await _mediator.Send(command);
-
-        return CreatedAtRoute("GetDiscount", new { productName = couponResponse.ProductName }, couponResponse);
+        await _discountRepository.CreateDiscountAsync(coupon);
+        return CreatedAtRoute("GetDiscount", new { productName = coupon.ProductName}, coupon);
     }
 
-    // PUT: api/v1/[controller]
     [HttpPut]
-    [ProducesResponseType(typeof(CouponResponse), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> UpdateDiscountAsync([FromBody] UpdateDiscountCommand command)
+    [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult<bool>> UpdateDiscountAsync([FromBody] Coupon coupon)
     {
-        var couponResponse = await _mediator.Send(command);
-
-        return Ok(couponResponse);
+        return Ok(await _discountRepository.UpdateDiscountAsync(coupon));
     }
 
-    // DELETE: api/v1/[controller]/productName
-    [HttpDelete("{productName}")]
+    [HttpDelete("{productName}", Name = "DeleteDiscount")]
     [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> DeleteProductAsync(string productName)
+    public async Task<ActionResult<bool>> DeleteDiscountAsync(string productName)
     {
-        var result = await _mediator.Send(new DeleteDiscountCommand(productName));
-
-        return Ok(result);
+        return Ok(await _discountRepository.DeleteDiscountAsync(productName));
     }
 }
