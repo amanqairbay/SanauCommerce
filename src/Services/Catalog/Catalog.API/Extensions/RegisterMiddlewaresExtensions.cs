@@ -24,7 +24,7 @@ public static class RegisterMiddlewaresExtensions
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog.API v1"));
         }
 
-        app.UseHttpsRedirection();
+        // app.UseHttpsRedirection();
         app.UseRouting();
 
         #pragma warning disable ASP0014 // Suggest using top level route registrations
