@@ -20,9 +20,9 @@ public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
         ILogger<DiscountService> logger, 
         IMapper mapper)
     {
-        _discountRepository = discountRepository;
-        _logger = logger;
-        _mapper = mapper;
+        _discountRepository = discountRepository ?? throw new ArgumentNullException(nameof(discountRepository));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
     }
 
     /// <summary>

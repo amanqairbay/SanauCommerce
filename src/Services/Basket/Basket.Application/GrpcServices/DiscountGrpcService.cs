@@ -11,7 +11,7 @@ public class DiscountGrpcService
 
     public DiscountGrpcService(DiscountProtoService.DiscountProtoServiceClient discountProtoServiceClient)
 	{
-        _discountProtoServiceClient = discountProtoServiceClient;
+        _discountProtoServiceClient = discountProtoServiceClient ?? throw new ArgumentNullException(nameof(discountProtoServiceClient));
     }
 
     /// <summary>

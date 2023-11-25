@@ -15,8 +15,8 @@ public class CreateBasketHandler : IRequestHandler<CreateBasketCommand, Shopping
 
     public CreateBasketHandler(DiscountGrpcService discountGrpcService, IBasketRepository basketRepository)
     {
-        _discountGrpcService = discountGrpcService;
-        _basketRepository = basketRepository;
+        _discountGrpcService = discountGrpcService ?? throw new ArgumentNullException(nameof(discountGrpcService));
+        _basketRepository = basketRepository ?? throw new ArgumentNullException(nameof(basketRepository));
     }
 
     /// <summary>
@@ -29,6 +29,7 @@ public class CreateBasketHandler : IRequestHandler<CreateBasketCommand, Shopping
     /// </returns>
     public async Task<ShoppingCartResponse> Handle(CreateBasketCommand command, CancellationToken cancellationToken)
     {
+        // communicate with Discount.Grpc
         foreach (var item in command.Items)
         {
             var coupon = await _discountGrpcService.GetDiscountAsync(item.ProductName);

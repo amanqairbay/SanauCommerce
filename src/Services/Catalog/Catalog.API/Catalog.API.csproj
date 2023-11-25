@@ -6,8 +6,6 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <DockerComposeProjectPath>../../../docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
-
   <ItemGroup>
     <ProjectReference Include="..\Catalog.Application\Catalog.Application.csproj" />
     <ProjectReference Include="..\Catalog.Infrastructure\Catalog.Infrastructure.csproj" />

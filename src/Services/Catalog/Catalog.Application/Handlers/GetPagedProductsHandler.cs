@@ -16,7 +16,7 @@ public class GetPagedProductsHandler : IRequestHandler<GetPagedProductsQuery, Pa
 
     public GetPagedProductsHandler(IProductRepository productRepository)
     {
-        _productRepository = productRepository;
+        _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
     }
 
     /// <summary>

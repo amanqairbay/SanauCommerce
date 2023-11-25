@@ -1,7 +1,6 @@
 using Catalog.Application.Mappers;
 using Catalog.Application.Queries;
 using Catalog.Application.Responses;
-using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
 using MediatR;
 
@@ -17,7 +16,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, IReadOnlyLis
 
     public GetProductsHandler(IProductRepository productRepository)
     {
-        _productRepository = productRepository;
+        _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
     }
 
     /// <summary>

@@ -14,7 +14,7 @@ public class BasketRepository : IBasketRepository
 
     public BasketRepository(IDistributedCache redisCache)
     {
-        _redisCache = redisCache;
+        _redisCache = redisCache ?? throw new ArgumentNullException(nameof(redisCache));
     }
 
     /// <summary>

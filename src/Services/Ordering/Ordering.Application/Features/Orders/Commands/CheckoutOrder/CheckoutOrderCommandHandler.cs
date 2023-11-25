@@ -24,14 +24,14 @@ public class CheckoutOrderCommandHandler : IRequestHandler<CheckoutOrderCommand,
         ILogger<CheckoutOrderCommandHandler> logger, 
         IOrderRepository orderRepository)
     {
-        _emailService = emailService;
-        _mapper = mapper;
-        _logger = logger;
-        _orderRepository = orderRepository;
+        _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
+        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
     }
 
     /// <summary>
-    /// Handles a request.
+    /// Handles a command.
     /// </summary>
     /// <param name="command">Represents a checkout order command.</param>
     /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>

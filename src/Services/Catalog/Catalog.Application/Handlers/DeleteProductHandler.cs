@@ -11,7 +11,10 @@ public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, bool>
 {
     private readonly IProductRepository _productRepository;
 
-    public DeleteProductHandler(IProductRepository productRepository) => _productRepository = productRepository;
+    public DeleteProductHandler(IProductRepository productRepository)
+    {
+        _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+    }
 
     /// <summary>
     /// Handles a command.

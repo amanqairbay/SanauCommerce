@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -42,6 +42,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Application", "Services\Ordering\Ordering.Application\Ordering.Application.csproj", "{80A63B8A-8FD3-4D8C-B6AD-DEDB1A14FC2C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ordering.Infrastructure", "Services\Ordering\Ordering.Infrastructure\Ordering.Infrastructure.csproj", "{722D7A58-257D-4954-9378-810670DCA377}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{83FA8D89-2CB5-4310-A82A-9F924FEE18F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus.Messages", "BuildingBlocks\EventBus.Messages\EventBus.Messages.csproj", "{AA129B89-C315-4EBD-B7E6-AAE58D44D242}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -112,6 +116,10 @@ Global
 		{722D7A58-257D-4954-9378-810670DCA377}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{722D7A58-257D-4954-9378-810670DCA377}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{722D7A58-257D-4954-9378-810670DCA377}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA129B89-C315-4EBD-B7E6-AAE58D44D242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA129B89-C315-4EBD-B7E6-AAE58D44D242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA129B89-C315-4EBD-B7E6-AAE58D44D242}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA129B89-C315-4EBD-B7E6-AAE58D44D242}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{9A313E8F-6578-4716-8B30-83C385193E44} = {3AE1F0C9-048A-4CA8-A2C0-BC14B739187A}
@@ -132,5 +140,6 @@ Global
 		{C877D48D-D0DF-460A-A7F1-46568F1506EC} = {EFCCC6C5-3876-4623-9533-02AC2BBB2488}
 		{80A63B8A-8FD3-4D8C-B6AD-DEDB1A14FC2C} = {EFCCC6C5-3876-4623-9533-02AC2BBB2488}
 		{722D7A58-257D-4954-9378-810670DCA377} = {EFCCC6C5-3876-4623-9533-02AC2BBB2488}
+		{AA129B89-C315-4EBD-B7E6-AAE58D44D242} = {83FA8D89-2CB5-4310-A82A-9F924FEE18F1}
 	EndGlobalSection
 EndGlobal

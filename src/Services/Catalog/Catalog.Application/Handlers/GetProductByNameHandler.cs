@@ -19,7 +19,7 @@ public class GetProductsByNameHandler : IRequestHandler<GetProductByNameQuery, I
 
     public GetProductsByNameHandler(IProductRepository productRepository)
 	{
-        _productRepository = productRepository;
+        _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
 	}
 
     /// <summary>

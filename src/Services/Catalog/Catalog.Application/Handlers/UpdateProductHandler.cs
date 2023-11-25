@@ -10,7 +10,10 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, bool>
 {
     private readonly IProductRepository _productRepository;
 
-    public UpdateProductHandler(IProductRepository productRepository) => _productRepository = productRepository;
+    public UpdateProductHandler(IProductRepository productRepository)
+    {
+        _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+    }
 
     /// <summary>
     /// Handles a command.

@@ -16,7 +16,7 @@ public class ProductRepository : IProductRepository
 
     public ProductRepository(ICatalogContext context)
     {
-        _context = context;
+        _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
     /// <summary>

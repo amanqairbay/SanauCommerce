@@ -22,7 +22,7 @@ public static class InfrastructureServiceRegistration
     /// <param name="configuration">Represents a set of key/value application configuration properties.</param>
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {            
-        services.AddDbContext<OrderContext>(options => options.UseSqlServer(configuration.GetConnectionString("OrderingConnectionString")));
+        services.AddSqlServer<OrderContext>(configuration.GetConnectionString("OrderingConnectionString"));
         services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));                        
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.Configure<EmailSettings>(c => configuration.GetSection("EmailSettings"));

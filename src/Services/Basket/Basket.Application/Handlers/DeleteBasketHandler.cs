@@ -13,7 +13,7 @@ public class DeleteBasketHandler : IRequestHandler<DeleteBasketCommand, Unit>
 
     public DeleteBasketHandler(IBasketRepository basketRepository)
     {
-        _basketRepository = basketRepository;
+        _basketRepository = basketRepository ?? throw new ArgumentNullException(nameof(basketRepository));
     }
 
     /// <summary>

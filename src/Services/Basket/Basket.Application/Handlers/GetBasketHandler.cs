@@ -15,7 +15,7 @@ public class GetBasketHandler : IRequestHandler<GetBasketQuery, ShoppingCartResp
 
 	public GetBasketHandler(IBasketRepository basketRepository)
 	{
-        _basketRepository = basketRepository;
+        _basketRepository = basketRepository ?? throw new ArgumentNullException(nameof(basketRepository));
 	}
 
     /// <summary>

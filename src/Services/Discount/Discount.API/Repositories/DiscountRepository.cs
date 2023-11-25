@@ -15,7 +15,7 @@ public class DiscountRepository : IDiscountRepository
 
     public DiscountRepository(IConfiguration configuration)
     {
-        _configuration = configuration;
+        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         _connectionString = _configuration.GetValue<string>("DatabaseSettings:ConnectionString");
     }
 

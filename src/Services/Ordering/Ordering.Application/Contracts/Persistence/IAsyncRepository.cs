@@ -40,9 +40,9 @@ public interface IAsyncRepository<T> where T : BaseEntity
     /// The task result contains a collection of entities.
     /// </returns>
     Task<IReadOnlyList<T>> GetAsync(
-        Expression<Func<T, bool>>? predicate = null, 
-        Func<IQueryable<T>?, IOrderedQueryable<T>>? orderBy = null,
-        string? includeString = null,
+        Expression<Func<T, bool>> predicate = null, 
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        string includeString = null,
         bool disableTracking = true);
 
     /// <summary>
@@ -57,9 +57,9 @@ public interface IAsyncRepository<T> where T : BaseEntity
     /// The task result contains a collection of entities.
     /// </returns>
     Task<IReadOnlyList<T>> GetAsync(
-        Expression<Func<T, bool>>? predicate = null,
-        Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null,
-        List<Expression<Func<T, object>>>? includes = null,
+        Expression<Func<T, bool>> predicate = null,
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        List<Expression<Func<T, object>>> includes = null,
         bool disableTracking = true);
 
     /// <summary>
@@ -70,7 +70,7 @@ public interface IAsyncRepository<T> where T : BaseEntity
     /// A task that represents the asynchronous operation.
     /// The task result contains the entity.
     /// </returns>
-    Task<T?> GetByIdAsync(int id);
+    Task<T> GetByIdAsync(int id);
 
     /// <summary>
     /// Adds an entity.
