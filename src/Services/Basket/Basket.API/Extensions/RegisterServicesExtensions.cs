@@ -31,16 +31,24 @@ public static class RegisterServicesExtensions
         // DI
         builder.Services.AddScoped<IBasketRepository, BasketRepository>();
         // gRPC
-        builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options => options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!));
         builder.Services.AddScoped<DiscountGrpcService>();
+        builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(grpcClientFactoryOptions => grpcClientFactoryOptions.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!));
+        
         // mass transit rabbitmq
-        builder.Services.AddMassTransit(config => { config.UsingRabbitMq((context, configuration) => { configuration.Host(builder.Configuration["EventBusSettings:HostAddress"]); }); });
+        builder.Services.AddMassTransit(busRegistrationConfigurator => 
+        { 
+            busRegistrationConfigurator.UsingRabbitMq((busRegistrationContext, rabbitMqBusFactoryConfigurator) => 
+            { 
+                rabbitMqBusFactoryConfigurator.Host(builder.Configuration["EventBusSettings:HostAddress"]); 
+            }); 
+        });
+        
         // mediatr
-        builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(CreateBasketHandler).Assembly));
+        builder.Services.AddMediatR(mediatRServiceConfiguration => mediatRServiceConfiguration.RegisterServicesFromAssembly(typeof(CreateBasketHandler).Assembly));
         // swagger
-        builder.Services.AddSwaggerGen(options => options.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket.API", Version = "v1" }));
+        builder.Services.AddSwaggerGen(swaggerGenOptions => swaggerGenOptions.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket.API", Version = "v1" }));
         // redis
-        builder.Services.AddStackExchangeRedisCache(options => { options.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString"); });
+        builder.Services.AddStackExchangeRedisCache(redisCacheOptions => { redisCacheOptions.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString"); });
         builder.Services.AddHealthChecks().AddRedis(builder.Configuration["CacheSettings:ConnectionString"]!, "Redis Health", HealthStatus.Degraded);
         // controllers
         builder.Services.AddControllers();

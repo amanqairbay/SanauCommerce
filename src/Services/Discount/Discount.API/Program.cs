@@ -23,21 +23,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseRouting();
-
-#pragma warning disable ASP0014 // Suggest using top level route registrations
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-    endpoints.MapHealthChecks("/health", new HealthCheckOptions()
-    {
-        Predicate = _ => true,
-        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-    });
-});
-
-#pragma warning restore ASP0014 // Suggest using top level route registrations
-
+app.MapControllers();
+app.MapHealthChecks("/health", new HealthCheckOptions() { Predicate = _ => true, ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse });
 app.MigrateDatabase<Program>();
-
 app.Run();

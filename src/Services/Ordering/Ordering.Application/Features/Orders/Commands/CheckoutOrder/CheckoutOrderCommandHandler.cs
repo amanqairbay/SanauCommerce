@@ -58,7 +58,12 @@ public class CheckoutOrderCommandHandler : IRequestHandler<CheckoutOrderCommand,
     //// <returns>A task that represents the asynchronous operation.</returns>
     private async Task SendMail(Order order)
     {            
-        var email = new Email() { To = "amankhair38@gmail.com", Body = $"Order was created.", Subject = "Order was created" };
+        var email = new Email() 
+        { 
+            To = "amankhair38@gmail.com", 
+            Body = $"Order was created.", 
+            Subject = "Order was created" 
+        };
 
         try
         {

@@ -73,7 +73,8 @@ services:
     depends_on:
       - catalogdb
     ports:
-      - "8000:80"
+      - "8000:80" # Important: In a production environment you should remove the external port (8000) kept here for microservice debugging purposes.
+                  # The API Gateway redirects and access through the internal port (80).
 
   basket.api:
     container_name: basket.api
@@ -87,7 +88,8 @@ services:
       - basketdb
       - rabbitmq
     ports:
-      - "8001:80"
+      - "8001:80" # Important: In a production environment you should remove the external port (8001) kept here for microservice debugging purposes.
+                  # The API Gateway redirects and access through the internal port (80).
 
   discount.api:
     container_name: discount.api
@@ -98,7 +100,8 @@ services:
     depends_on:
       - discountdb
     ports:
-      - "8002:80"
+      - "8002:80" # Important: In a production environment you should remove the external port (8002) kept here for microservice debugging purposes.
+                  # The API Gateway redirects and access through the internal port (80).
   
   discount.grpc:
     container_name: discount.grpc
@@ -109,7 +112,8 @@ services:
     depends_on:
       - discountdb
     ports:
-      - "8003:80"
+      - "8003:80" # Important: In a production environment you should remove the external port (8003) kept here for microservice debugging purposes.
+                  # The API Gateway redirects and access through the internal port (80).
 
   ordering.api:
     container_name: ordering.api
@@ -122,4 +126,18 @@ services:
       - orderdb
       - rabbitmq
     ports:
-      - "8004:80"
+      - "8004:80" # Important: In a production environment you should remove the external port (8004) kept here for microservice debugging purposes.
+                  # The API Gateway redirects and access through the internal port (80).
+
+  ocelot.api.gw:
+    container_name: ocelot.api.gw
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+    depends_on:
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "8010:80"

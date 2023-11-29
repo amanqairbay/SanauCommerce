@@ -16,7 +16,10 @@ public class BasketCheckoutConsumer : IConsumer<BasketCheckoutEvent>
     private readonly IMapper _mapper;
     private readonly ILogger<BasketCheckoutConsumer> _logger;
 
-    public BasketCheckoutConsumer(IMediator mediator, IMapper mapper, ILogger<BasketCheckoutConsumer> logger)
+    public BasketCheckoutConsumer(
+        IMediator mediator, 
+        IMapper mapper, 
+        ILogger<BasketCheckoutConsumer> logger)
     {
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));

@@ -65,6 +65,8 @@ public class BasketController : ApiController
         eventMessage.TotalPrice = basket.TotalPrice;
 
         // send checkout event to rabbitmq
+        // Publishes a message to all subscribed consumers for the message type as specified by the generic parameter. 
+        // The second parameter allows the caller to customize the outgoing publish context and set things like headers on the message.
         await _publishEndpoint.Publish(eventMessage);
 
         // remove the basket

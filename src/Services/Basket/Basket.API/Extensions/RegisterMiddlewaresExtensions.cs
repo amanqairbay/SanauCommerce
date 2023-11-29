@@ -27,17 +27,12 @@ public static class RegisterMiddlewaresExtensions
         app.UseHttpsRedirection();
         app.UseRouting();
 
-        #pragma warning disable ASP0014 // Suggest using top level route registrations
-        app.UseEndpoints(cfg =>
+        app.MapControllers();
+        app.MapHealthChecks("/health", new HealthCheckOptions
         {
-            cfg.MapControllers();
-            cfg.MapHealthChecks("/health", new HealthCheckOptions
-            {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            });
+            Predicate = _ => true,
+            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
         });
-        #pragma warning restore ASP0014 // Suggest using top level route registrations
 
         return app;
     }
