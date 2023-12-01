@@ -49,7 +49,7 @@ public static class RegisterServicesExtensions
         builder.Services.AddSwaggerGen(swaggerGenOptions => swaggerGenOptions.SwaggerDoc("v1", new OpenApiInfo { Title = "Basket.API", Version = "v1" }));
         // redis
         builder.Services.AddStackExchangeRedisCache(redisCacheOptions => { redisCacheOptions.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString"); });
-        builder.Services.AddHealthChecks().AddRedis(builder.Configuration["CacheSettings:ConnectionString"]!, "Redis Health", HealthStatus.Degraded);
+        builder.Services.AddHealthChecks().AddRedis(builder.Configuration["CacheSettings:ConnectionString"], "Redis Health", HealthStatus.Degraded);
         // controllers
         builder.Services.AddControllers();
         

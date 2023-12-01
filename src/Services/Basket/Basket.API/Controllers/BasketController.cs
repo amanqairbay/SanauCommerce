@@ -50,11 +50,11 @@ public class BasketController : ApiController
         return Ok(await _mediator.Send(new DeleteBasketCommand(username)));
     }
 
-    [HttpPost]
-    [Route("[action]")]
+    // POST: api/v{version:apiVersion}/[controller]/checkout
+    [HttpPost("checkout")]
     [ProducesResponseType((int)HttpStatusCode.Accepted)]
     [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-    public async Task<IActionResult> CheckOut([FromBody] BasketCheckout basketCheckout)
+    public async Task<IActionResult> CheckOutAsync([FromBody] BasketCheckout basketCheckout)
     {
         // get existing basket with total price
         var basket = await _mediator.Send(new GetBasketQuery(basketCheckout.UserName));
