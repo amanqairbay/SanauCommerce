@@ -1,4 +1,5 @@
 using Catalog.Application.Responses;
+using Catalog.Core.Entities;
 using MediatR;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -14,12 +15,6 @@ public class CreateProductCommand : IRequest<ProductResponse>
     /// </summary>
     [BsonElement("Name")]
     public string Name { get; set; } = String.Empty;
-
-    /// <summary>
-    /// Gets or sets a category.
-    /// </summary>
-    [BsonElement("Category")]
-    public string Category { get; set; } = String.Empty;
 
     /// <summary>
     /// Gets or sets a summary.
@@ -38,6 +33,18 @@ public class CreateProductCommand : IRequest<ProductResponse>
     /// </summary>
     [BsonElement("ImageFile")]
     public string ImageFile { get; set; } = String.Empty;
+
+    /// <summary>
+    /// Gets or sets a brand.
+    /// </summary>
+    [BsonElement("Brand")]
+    public ProductBrand Brand { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets a type.
+    /// </summary>
+    [BsonElement("Type")]
+    public ProductType Type { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets a price.

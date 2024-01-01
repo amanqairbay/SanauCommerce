@@ -1,3 +1,4 @@
+using Catalog.Core.Logging;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
@@ -17,14 +18,20 @@ public static class RegisterMiddlewaresExtensions
     /// </returns>
     public static WebApplication ConfigureMiddlewares(this WebApplication app)
     {
-        if (app.Environment.IsDevelopment())
+        var logger = app.Services.GetRequiredService<ILoggerManager>();
+        app.ConfigureExceptionHandler(logger);
+        
+        if (app.Environment.IsProduction())
         {
-            app.UseDeveloperExceptionPage();
-            app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog.API v1"));
+            app.UseHsts();   
         }
-
+        
+        app.UseSwaggerMiddleware();
+        app.UseStaticFiles();
         app.UseRouting();
+        app.UseCors("CorsPolicy");
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.MapControllers();
         app.MapHealthChecks("/health", new HealthCheckOptions { Predicate = _ => true, ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse });
 

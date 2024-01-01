@@ -1,6 +1,7 @@
 using Catalog.Application.Mappers;
 using Catalog.Application.Queries;
 using Catalog.Application.Responses;
+using Catalog.Core.Entities.Exceptions;
 using Catalog.Core.Repositories;
 using MediatR;
 
@@ -11,11 +12,11 @@ namespace Catalog.Application.Handlers;
 /// </summary>
 public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, ProductResponse>
 {
-    private readonly IProductRepository _productRepository;
+    private readonly IRepositoryManager _repository;
 
-    public GetProductByIdHandler(IProductRepository productRepository)
+    public GetProductByIdHandler(IRepositoryManager repository)
 	{
-        _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
 	}
 
     /// <summary>
@@ -27,11 +28,11 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, Produc
     /// A task that represents the asynchronous operation.
     /// The task result contains the products.
     /// </returns>
-    /// <exception cref="ApplicationException">Throw if the product doesn't exists in database.</exception>
+    /// <exception cref="NotFoundException">Throw if the product doesn't exists in database.</exception>
     public async Task<ProductResponse> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
     {
-        var product = await _productRepository.GetProductByIdAsync(request.Id)
-            ?? throw new ApplicationException($"The product with {request.Id} doesn't exists in database.");
+        var product = await _repository.Product.GetByIdAsync(request.Id)
+            ?? throw new NotFoundException($"The product with {request.Id} doesn't exist in the database.");
 
         var productResponse = CatalogMapper.GetMapper.Map<ProductResponse>(product);
 

@@ -7,14 +7,9 @@ namespace Catalog.Application.Handlers;
 /// <summary>
 /// Represents a product delete handler.
 /// </summary>
-public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, bool>
+public class DeleteProductHandler(IRepositoryManager repository) : IRequestHandler<DeleteProductCommand, bool>
 {
-    private readonly IProductRepository _productRepository;
-
-    public DeleteProductHandler(IProductRepository productRepository)
-    {
-        _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
-    }
+    private readonly IRepositoryManager _repository = repository ?? throw new ArgumentNullException(nameof(repository));
 
     /// <summary>
     /// Handles a command.
@@ -26,5 +21,5 @@ public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, bool>
     /// The task result contains the delete result.
     /// </returns>
     public async Task<bool> Handle(DeleteProductCommand command, CancellationToken cancellationToken) =>
-        await _productRepository.DeleteProductAsync(command.Id);
+        await _repository.Product.DeleteAsync(command.Id);
 }

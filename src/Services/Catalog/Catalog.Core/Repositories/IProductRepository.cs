@@ -15,7 +15,7 @@ public interface IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the products.
     /// </returns>
-    Task<IReadOnlyList<Product>> GetProductsAsync();
+    Task<IReadOnlyList<Product>> GetAllAsync();
 
     /// <summary>
     /// Gets paged products.
@@ -25,7 +25,7 @@ public interface IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the paged products.
     /// </returns>
-    Task<Pagination<Product>> GetPagedProductsAsync(ProductParameters productParams);
+    Task<Pagination<Product>> GetAllPagedAsync(ProductParameters productParams);
 
     /// <summary>
     /// Gets a product by identifier.
@@ -35,46 +35,56 @@ public interface IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    Task<Product> GetProductByIdAsync(string id);
+    Task<Product> GetByIdAsync(string id);
 
     /// <summary>
-    /// Gets the product by name.
+    /// Gets a product by name.
     /// </summary>
     /// <param name="name">Product name.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    Task<IReadOnlyList<Product>> GetProductByNameAsync(string name);
+    Task<Product> GetByNameAsync(string name);
 
     /// <summary>
-    /// Gets the product by category.
+    /// Gets the products by name.
     /// </summary>
-    /// <param name="categoryName">Category name.</param>
+    /// <param name="name">Product name.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains the list of product.
+    /// </returns>
+    Task<IReadOnlyList<Product>> GetAllByNameAsync(string name);
+
+    /// <summary>
+    /// Gets the product by type.
+    /// </summary>
+    /// <param name="typeName">Product type name.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    Task<IReadOnlyList<Product>> GetProductByCategoryAsync(string categoryName);
+    Task<IReadOnlyList<Product>> GetByTypeAsync(string typeName);
 
     /// <summary>
     /// Creates a new product.
     /// </summary>
     /// <param name="product">Product.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    Task<Product> CreateProductAsync(Product product);
+    Task<Product> CreateAsync(Product product);
 
     /// <summary>
     /// Updates a product.
     /// </summary>
     /// <param name="product">Product.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    Task<bool> UpdateProductAsync(Product product);
+    Task<bool> UpdateAsync(Product product);
 
     /// <summary>
     /// Deletes a product.
     /// </summary>
     /// <param name="id">Product identifier.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    Task<bool> DeleteProductAsync(string id);
+    Task<bool> DeleteAsync(string id);
 }

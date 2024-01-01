@@ -8,17 +8,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.API.Controllers;
 
-public class CatalogController : ApiController
+public class ProductController : ApiController
 {
     private readonly IMediator _mediator;
 
-    public CatalogController(IMediator mediator)
+    public ProductController(IMediator mediator)
     {
         _mediator = mediator;
     }
 
-    // GET: api/v1/[controller]/products
-    [HttpGet("products")]
+    // GET: api/v1/[controller]/list
+    [HttpGet("list")]
     [ProducesResponseType(typeof(IReadOnlyList<ProductResponse>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> GetProductsAsync()
     {
@@ -27,8 +27,8 @@ public class CatalogController : ApiController
         return Ok(products);
     }
 
-    // GET: api/v1/[controller]/pagedProducts
-    [HttpGet("pagedProducts")]
+    // GET: api/v1/[controller]/pagedList
+    [HttpGet("pagedList")]
     [ProducesResponseType(typeof(Pagination<ProductResponse>), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> GetPagedProductsAsync([FromQuery] ProductParameters productParams)
     {
@@ -37,8 +37,8 @@ public class CatalogController : ApiController
         return Ok(pagedProducts);
     }
 
-    // GET: api/v1/[controller]/products/id
-    [HttpGet("products/{id:length(24)}", Name = "GetProductById")]
+    // GET: api/v1/[controller]/id
+    [HttpGet("{id:length(24)}", Name = "GetById")]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> GetProductByIdAsync(string id)
@@ -48,8 +48,8 @@ public class CatalogController : ApiController
         return Ok(product);
     }
 
-    // GET: api/v1/[controller]/products/name
-    [HttpGet("products/{name}", Name = "GetProductByName")]
+    // GET: api/v1/[controller]/name/{name}
+    [HttpGet("name/{name:minlength(1)}", Name = "GetByName")]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> GetProductByNameAsync(string name)
@@ -59,18 +59,31 @@ public class CatalogController : ApiController
         return Ok(product);
     }
 
-    // POST: api/v1/[controller]/products
-    [HttpPost("products")]
+    // GET: api/v1/[controller]/type/{type}
+    [HttpGet("type/{type:minlength(1)}", Name = "GetByType")]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> GetProductByTypeAsync(string type)
+    {
+        var products = await _mediator.Send(new GetProductByTypeQuery(type));
+        
+        return Ok(products);
+    }
+
+    // POST: api/v1/[controller]/create
+    //[Authorize("ClientIdPolicy")]
+    [HttpPost("create")]
     [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> CreateProductAsync([FromBody] CreateProductCommand command)
     {
         var productResponse = await _mediator.Send(command);
 
-        return CreatedAtRoute("GetProductById", new { id = productResponse.Id }, productResponse);
+        return CreatedAtRoute("GetById", new { id = productResponse.Id }, productResponse);
     }
 
-    // PUT: api/v1/[controller]/products
-    [HttpPut("products")]
+    // PUT: api/v1/[controller]/update
+    //[Authorize("ClientIdPolicy")]
+    [HttpPut("update")]
     [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> UpdateProductAsync([FromBody] UpdateProductCommand command)
     {
@@ -79,8 +92,9 @@ public class CatalogController : ApiController
         return Ok(result);
     }
 
-    // DELETE: api/v1/[controller]/products/id
-    [HttpDelete("products/{id:length(24)}", Name = "DeleteProduct")]
+    // DELETE: api/v1/[controller]/delete/id
+    //[Authorize("ClientIdPolicy")]
+    [HttpDelete("delete/{id:length(24)}", Name = "DeleteProduct")]
     [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> DeleteProductAsync(string id)
     {

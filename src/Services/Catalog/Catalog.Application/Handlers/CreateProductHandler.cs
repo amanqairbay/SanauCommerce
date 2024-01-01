@@ -2,19 +2,18 @@ using Catalog.Application.Commands;
 using Catalog.Application.Mappers;
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;
+using Catalog.Core.Entities.Exceptions;
 using Catalog.Core.Repositories;
 using MediatR;
 
-namespace Catalog.Application.Queries;
+namespace Catalog.Application.Handlers;
 
 /// <summary>
 /// Represents a product create handler.
 /// </summary>
-public class CreateProductHandler : IRequestHandler<CreateProductCommand, ProductResponse>
+public class CreateProductHandler(IRepositoryManager repository) : IRequestHandler<CreateProductCommand, ProductResponse>
 {
-    private readonly IProductRepository _productRepository;
-
-    public CreateProductHandler(IProductRepository productRepository) => _productRepository = productRepository;
+    private readonly IRepositoryManager _repository = repository ?? throw new ArgumentNullException(nameof(repository));
 
     /// <summary>
     /// Handles a command.
@@ -29,10 +28,10 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Produc
     public async Task<ProductResponse> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
         var product = CatalogMapper.GetMapper.Map<Product>(command)
-            ?? throw new ApplicationException("There is an issue mapping while creating new product.");
+            ?? throw new BadRequestException("There is an issue mapping while creating new product.");
 
-        var newProduct = await _productRepository.CreateProductAsync(product);
-        var productResponse = CatalogMapper.GetMapper.Map<ProductResponse>(newProduct);
+        var createdProduct = await _repository.Product.CreateAsync(product);
+        var productResponse = CatalogMapper.GetMapper.Map<ProductResponse>(createdProduct);
 
         return productResponse;
     }

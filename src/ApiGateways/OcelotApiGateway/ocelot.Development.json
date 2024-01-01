@@ -1,7 +1,7 @@
 {
     "Routes": [
         {
-            "DownstreamPathTemplate": "/api/v1/Catalog",
+            "DownstreamPathTemplate": "/api/v1/Product/list",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -9,12 +9,12 @@
                     "Port": "80"
                 }
             ],
-            "UpstreamPathTemplate": "/Catalog",
-            "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+            "UpstreamPathTemplate": "/Products",
+            "UpstreamHttpMethod": [ "GET" ],
             "FileCacheOptions": { "TtlSeconds": 30 }
         },
         {
-            "DownstreamPathTemplate": "/api/v1/Catalog/{id}",
+            "DownstreamPathTemplate": "/api/v1/Product/pagedList",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -22,11 +22,11 @@
                     "Port": "80"
                 }
             ],
-            "UpstreamPathTemplate": "/Catalog/{id}",
-            "UpstreamHttpMethod": [ "GET", "DELETE" ]
+            "UpstreamPathTemplate": "/Products/paged",
+            "UpstreamHttpMethod": [ "GET" ]
         },
         {
-            "DownstreamPathTemplate": "/api/v1/Catalog/GetProductByCategory/{category}",
+            "DownstreamPathTemplate": "/api/v1/Product/{id}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
                 {
@@ -34,8 +34,68 @@
                     "Port": "80"
                 }
             ],
-            "UpstreamPathTemplate": "/Catalog/GetProductByCategory/{category}",
+            "UpstreamPathTemplate": "/Products/{id}",
             "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/Product/name/{name}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/Products/name/{name}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/Product/type/{type}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/Products/type/{type}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/Product/Create",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/Products/PoCreatest",
+            "UpstreamHttpMethod": [ "POST" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/Product/Update",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/Products/Update",
+            "UpstreamHttpMethod": [ "PUT" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/Product/Delete/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/Products/Delete/{id}",
+            "UpstreamHttpMethod": [ "DELETE" ]
         },
         {
             "DownstreamPathTemplate": "/api/v1/Basket/{username}",

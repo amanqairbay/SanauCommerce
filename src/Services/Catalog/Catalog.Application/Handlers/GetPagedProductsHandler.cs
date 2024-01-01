@@ -10,14 +10,9 @@ namespace Catalog.Application.Handlers;
 /// <summary>
 /// Represents a handler to get all products.
 /// </summary>
-public class GetPagedProductsHandler : IRequestHandler<GetPagedProductsQuery, Pagination<ProductResponse>>
+public class GetPagedProductsHandler(IRepositoryManager repository) : IRequestHandler<GetPagedProductsQuery, Pagination<ProductResponse>>
 {
-    private readonly IProductRepository _productRepository;
-
-    public GetPagedProductsHandler(IProductRepository productRepository)
-    {
-        _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
-    }
+    private readonly IRepositoryManager _repository = repository ?? throw new ArgumentNullException(nameof(repository));
 
     /// <summary>
     /// Handles a request.
@@ -30,7 +25,10 @@ public class GetPagedProductsHandler : IRequestHandler<GetPagedProductsQuery, Pa
     /// </returns>
     public async Task<Pagination<ProductResponse>> Handle(GetPagedProductsQuery request, CancellationToken cancellationToken)
     {
-        var products = await _productRepository.GetPagedProductsAsync(request.ProductParams);
+        if (!request.ProductParams.ValidPriceRange)
+            throw new ApplicationException("Maximum price can't be less than minimum price. And minimum price can't be less than 0.");
+            
+        var products = await _repository.Product.GetAllPagedAsync(request.ProductParams);
         var pagedProductResponse = CatalogMapper.GetMapper.Map<Pagination<ProductResponse>>(products);
 
         return pagedProductResponse;

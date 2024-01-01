@@ -6,7 +6,7 @@ namespace Catalog.Core.RequestFeatures;
 /// <typeparam name="T">Entity type.</typeparam>
 public class Pagination<T> where T : class
 {
-	/// <summary>
+    /// <summary>
 	/// Gets or sets a page index.
 	/// </summary>
 	public int PageIndex { get; set; }

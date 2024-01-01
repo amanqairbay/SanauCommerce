@@ -6,14 +6,9 @@ using MediatR;
 
 namespace Catalog.Application.Handlers;
 
-public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, bool>
+public class UpdateProductHandler(IRepositoryManager repository) : IRequestHandler<UpdateProductCommand, bool>
 {
-    private readonly IProductRepository _productRepository;
-
-    public UpdateProductHandler(IProductRepository productRepository)
-    {
-        _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
-    }
+    private readonly IRepositoryManager _repository = repository ?? throw new ArgumentNullException(nameof(repository));
 
     /// <summary>
     /// Handles a command.
@@ -25,10 +20,10 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, bool>
     /// The task result contains the update result.
     /// </returns>
     public async Task<bool> Handle(UpdateProductCommand command, CancellationToken cancellationToken) 
-    {
+    {        
         var product = CatalogMapper.GetMapper.Map<Product>(command)
             ?? throw new ApplicationException("There is an issue mapping while updating new product.");
         
-        return await _productRepository.UpdateProductAsync(product);
+        return await _repository.Product.UpdateAsync(product);
     }
 }

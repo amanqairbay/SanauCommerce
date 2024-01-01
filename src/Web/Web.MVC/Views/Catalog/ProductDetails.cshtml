@@ -1,0 +1,168 @@
+@model Web.MVC.ViewModels.Product
+@{ 
+    ViewData["Title"] = "Product Detail"; 
+}
+
+<div class="container mt-4">
+    <div class="border rounded-3 p-10 pb-8 mb-10">
+        <div class="row g-5 g-lg-10">
+            <!-- Product gallery -->
+            <div class="col-lg-7">
+                <div class="swiper-gallery">
+                    <div class="swiper swiper-gallery-body product-gallery swiper-initialized swiper-horizontal swiper-pointer-events swiper-backface-hidden">
+                        <div class="swiper-wrapper" id="swiper-wrapper-889faebb7c56db21" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
+                            <div class="swiper-slide swiper-slide-active" role="group" aria-label="1 / 4" style="width: 658px; margin-right: 10px;">
+                                <div class="swiper-gallery-image">
+                                    <img src="~/img/product-card/@Model.ImageFile">
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide-next" role="group" aria-label="2 / 4" style="width: 658px; margin-right: 10px;">
+                                <div class="swiper-gallery-image">
+                                    <img src="~/img/product-card/@Model.ImageFile">
+                                </div>
+                            </div>
+                            <div class="swiper-slide" role="group" aria-label="3 / 4" style="width: 658px; margin-right: 10px;">
+                                <div class="swiper-gallery-image">
+                                    <img src="~/img/product-card/@Model.ImageFile">
+                                </div>
+                            </div>
+                            <div class="swiper-slide" role="group" aria-label="4 / 4" style="width: 658px; margin-right: 10px;">
+                                <div class="swiper-gallery-image">
+                                    <img src="~/img/product-card/@Model.ImageFile">
+                                </div>
+                            </div>
+                        </div>
+                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                    </div>
+                    <div thumbsslider="" class="swiper swiper-gallery-body product-gallery-thumbs swiper-initialized swiper-horizontal swiper-pointer-events swiper-watch-progress swiper-backface-hidden swiper-thumbs">
+                        <div class="swiper-wrapper" id="swiper-wrapper-168cdcc8b0f6aa1b" aria-live="polite" style="transform: translate3d(0px, 0px, 0px);">
+                            <div class="swiper-slide swiper-slide-visible swiper-slide-active swiper-slide-thumb-active" role="group" aria-label="1 / 4" style="width: 157px; margin-right: 10px;">
+                                <div class="swiper-gallery-thumb-image">
+                                    <img src="~/img/product-gallery/thumb-01.png">
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide-visible swiper-slide-next" role="group" aria-label="2 / 4" style="width: 157px; margin-right: 10px;">
+                                <div class="swiper-gallery-thumb-image">
+                                    <img src="~/img/product-gallery/thumb-02.png">
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide-visible" role="group" aria-label="3 / 4" style="width: 157px; margin-right: 10px;">
+                                <div class="swiper-gallery-thumb-image">
+                                    <img src="~/img/product-gallery/thumb-03.png">
+                                </div>
+                            </div>
+                            <div class="swiper-slide swiper-slide-visible" role="group" aria-label="4 / 4" style="width: 157px; margin-right: 10px;">
+                                <div class="swiper-gallery-thumb-image">
+                                    <img src="~/img/product-gallery/thumb-04.png">
+                                </div>
+                            </div>
+                        </div>
+                        <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
+                    </div>
+                </div>
+            </div>
+            <!-- Product gallery -->
+
+            <!-- Product details -->
+            <div class="col-lg-5">
+                <div class="product-details">
+                    <h5 class="product-title fs-4">
+                        <a href="#">@Model.Name</a>
+                    </h5>
+
+                    <div class="d-flex align-items-center border-bottom pb-2 mb-2">
+                        <span class="star-rating star-8 fs-6 align-middle"></span>
+                        <span class="d-inline-block fs-sm ms-2">4.7 by 35 Reviews</span>
+                    </div>
+
+                    <!-- Product Price -->
+                    <div class="product-price mb-3">
+                        <div class="row g-2">
+                            <div class="col-auto d-flex flex-column justify-content-center">
+                                <span class="text-accent fs-2">$@Model.Price</span>
+                            </div>
+                            <div class="col d-flex flex-column justify-content-center">
+                                <del class="text-muted"><span class="fs-sm">$499</span></del>
+                                <span class="text-danger fs-sm mt-n1">You save 30% (150$)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Price -->
+
+                    <!-- Color Picker -->
+                    <h5 class="h6 mb-2">Color</h5>
+                    <div class="mb-3">
+                        <div class="form-check form-option form-check-inline">
+                            <input class="form-check-input" type="radio" name="radioColor" id="color1" checked="">
+                            <label class="form-option-label rounded-circle" for="color1">
+                                <span class="form-option-color rounded-circle"
+                                    style="background-color: #d1d7eb;"></span>
+                            </label>
+                        </div>
+                        <div class="form-check form-option form-check-inline">
+                            <input class="form-check-input" type="radio" name="radioColor" id="color2">
+                            <label class="form-option-label rounded-circle" for="color2">
+                                <span class="form-option-color rounded-circle"
+                                    style="background-color: #f4e1a2;"></span>
+                            </label>
+                        </div>
+                        <div class="form-check form-option form-check-inline">
+                            <input class="form-check-input" type="radio" name="radioColor" id="color3">
+                            <label class="form-option-label rounded-circle" for="color3">
+                                <span class="form-option-color rounded-circle"
+                                    style="background-color: #ffdcff;"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Color Picker -->
+
+                    <div class="d-flex align-items-center">
+                        <!-- Quantity Products -->
+                        <div class="quantity-products me-3">
+                            <button class="quantity-btn-minus"><i class="ri-subtract-line"></i></button>
+                            <input class="quantity-number" type="number" value="1">
+                            <button class="quantity-btn-plus"><i class="ri-add-line"></i></button>
+                        </div>
+                        <!-- Quantity Products -->
+
+                        <!-- Button -->
+                        <button class="btn btn-primary d-flex align-items-center justify-content-center w-100"
+                            type="button">
+                            <i class="ri-shopping-cart-2-line"></i>
+                            <span class="d-none d-sm-inline ms-2">Add to Cart</span>
+                        </button>
+                        <!-- Button -->
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex pt-2 mb-4">
+                        <div class="w-50 me-3">
+                            <button class="btn btn-secondary d-block w-100" type="button">
+                                <span class="d-none d-sm-inline">Add to </span>
+                                Wishlist
+                            </button>
+                        </div>
+                        <div class="w-50">
+                            <button class="btn btn-secondary d-block w-100" type="button">
+                                Compare
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Buttons -->
+
+                    <!-- Info List -->
+                    <h5 class="h6 mb-3 py-2 border-bottom"><i
+                            class="ri-information-line text-muted fs-lg align-middle me-2"></i>Short description</h5>
+
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, vero ratione. Impedit,
+                        voluptatem, inventore ab consequuntur repudiandae hic aperiam nemo expedita ad aliquid cum amet
+                        corporis eum tempore explicabo iure?
+                        Tenetur cum atque autem, quas facilis laboriosam quia voluptates pariatur maiores suscipit quae
+                        inventore architecto.</p>
+                    <!-- Info List -->
+                </div>
+            </div>
+            <!-- Product details -->
+        </div>
+    </div>
+</div>

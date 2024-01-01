@@ -12,4 +12,14 @@ public interface ICatalogContext
     /// Gets the products.
     /// </summary>
     IMongoCollection<Product> Products { get; }
+
+    /// <summary>
+    /// Gets the product brands.
+    /// </summary>
+    IMongoCollection<ProductBrand> ProductBrands { get; }
+
+    /// <summary>
+    /// Gets the product types.
+    /// </summary>
+    IMongoCollection<ProductType> ProductTypes { get; }
 }

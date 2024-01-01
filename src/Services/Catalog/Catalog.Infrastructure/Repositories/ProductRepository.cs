@@ -26,7 +26,7 @@ public class ProductRepository : IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the products.
     /// </returns>
-    public async Task<IReadOnlyList<Product>> GetProductsAsync() =>
+    public async Task<IReadOnlyList<Product>> GetAllAsync() =>
         await _context
             .Products
             .Find(p => true)
@@ -40,13 +40,33 @@ public class ProductRepository : IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the paged products.
     /// </returns>
-    public async Task<Pagination<Product>> GetPagedProductsAsync(ProductParameters productParams)
+    public async Task<Pagination<Product>> GetAllPagedAsync(ProductParameters productParams)
     {
         var builder = Builders<Product>.Filter;
         var filter = builder.Empty;
 
+        filter &= builder.Where(p => p.Price >= productParams.MinPrice && p.Price <= productParams.MaxPrice);
+
         if (!string.IsNullOrEmpty(productParams.SearchTerm))
-            filter &= builder.Regex(p => p.Name, new BsonRegularExpression(productParams.SearchTerm));
+        {
+            var searchTerm = productParams.SearchTerm.Trim().ToLower();
+
+            filter &= builder.Where(p => p.Name.ToLower() == searchTerm || p.Name.ToLower().Contains(searchTerm));
+                
+            //filter &= builder.Regex(p => p.Name, new BsonRegularExpression(productParams.SearchTerm));
+        }
+
+        if (productParams.BrandId != null)
+        {
+            //filter &= builder.Eq(p => p.Brand.Id, productParams.BrandId);
+            foreach (var brandId in productParams.BrandId)
+            {
+                filter &= builder.Where(p => productParams.BrandId.Contains(p.Brand.Id));
+            }
+        }
+
+        if (!string.IsNullOrEmpty(productParams.TypeId))
+            filter &= builder.Eq(p => p.Type.Id, productParams.TypeId);
 
         if (!string.IsNullOrEmpty(productParams.Sort))
         {
@@ -108,22 +128,36 @@ public class ProductRepository : IProductRepository
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    public async Task<Product> GetProductByIdAsync(string id) =>
+    public async Task<Product> GetByIdAsync(string id) =>
         await _context
             .Products
             .Find(p => p.Id == id)
             .FirstOrDefaultAsync();
-    
 
     /// <summary>
-    /// Gets the product by name.
+    /// Gets a product by name.
     /// </summary>
-    /// <param name="name">Product name.</param>
+    /// <param name="id">Product name.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    public async Task<IReadOnlyList<Product>> GetProductByNameAsync(string name)
+    public async Task<Product> GetByNameAsync(string name) =>
+        await _context
+            .Products
+            .Find(p => p.Name == name)
+            .FirstOrDefaultAsync();
+    
+
+    /// <summary>
+    /// Gets the products by name.
+    /// </summary>
+    /// <param name="name">Product name.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains the list of product.
+    /// </returns>
+    public async Task<IReadOnlyList<Product>> GetAllByNameAsync(string name)
     {
         FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Name, name);
         
@@ -134,16 +168,16 @@ public class ProductRepository : IProductRepository
     }
 
     /// <summary>
-    /// Gets the product by category.
+    /// Gets the product by type.
     /// </summary>
-    /// <param name="categoryName">Category name.</param>
+    /// <param name="typeName">Product type name.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    public async Task<IReadOnlyList<Product>> GetProductByCategoryAsync(string categoryName)
+    public async Task<IReadOnlyList<Product>> GetByTypeAsync(string typeName)
     {
-        FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Category, categoryName);
+        FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Type.Name, typeName);
         
         return await _context
                 .Products
@@ -156,8 +190,9 @@ public class ProductRepository : IProductRepository
     /// </summary>
     /// <param name="product">Product.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    public async Task<Product> CreateProductAsync(Product product) 
+    public async Task<Product> CreateAsync(Product product) 
     {
+
         await _context.Products.InsertOneAsync(product);
 
         return product;
@@ -168,7 +203,7 @@ public class ProductRepository : IProductRepository
     /// </summary>
     /// <param name="product">Product.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
-    public async Task<bool> UpdateProductAsync(Product product)
+    public async Task<bool> UpdateAsync(Product product)
     {
         var updateResult = await _context.Products.ReplaceOneAsync(filter: g => g.Id == product.Id, replacement: product);
 
@@ -180,9 +215,9 @@ public class ProductRepository : IProductRepository
     /// </summary>
     /// <param name="id">Product identifier.</param>
     /// <returns> A task that represents the asynchronous operation.</returns>
-    public async Task<bool> DeleteProductAsync(string id)
+    public async Task<bool> DeleteAsync(string id)
     {
-        FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Id, id);
+        FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(field: p => p.Id, value: id);
 
         DeleteResult deleteResult = await _context.Products.DeleteOneAsync(filter);
 

@@ -3,6 +3,7 @@ using Catalog.Application.Queries;
 using Catalog.Application.Responses;
 using Catalog.Core.Repositories;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Catalog.Application.Handlers;
 
@@ -12,11 +13,13 @@ namespace Catalog.Application.Handlers;
 /// </summary>
 public class GetProductsHandler : IRequestHandler<GetProductsQuery, IReadOnlyList<ProductResponse>>
 {
-    private readonly IProductRepository _productRepository;
+    private readonly IRepositoryManager _repository;
+    private readonly ILogger<GetProductsHandler> _logger;
 
-    public GetProductsHandler(IProductRepository productRepository)
+    public GetProductsHandler(IRepositoryManager repository, ILogger<GetProductsHandler> logger)
     {
-        _productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+        _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     /// <summary>
@@ -30,8 +33,9 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, IReadOnlyLis
     /// </returns>
     public async Task<IReadOnlyList<ProductResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
     {
-        var products = await _productRepository.GetProductsAsync();
+        var products = await _repository.Product.GetAllAsync();
         var productsResponse = CatalogMapper.GetMapper.Map<IReadOnlyList<ProductResponse>>(products.ToList());
+        _logger.LogDebug("Received Product List.Total Count: {productList}", productsResponse.Count);
 
         return productsResponse;
     }

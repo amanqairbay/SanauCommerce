@@ -1,10 +1,8 @@
 using Catalog.Application.Mappers;
-using Catalog.Application.Queries;
 using Catalog.Core.Repositories;
 using Catalog.Infrastructure.Data;
 using Catalog.Infrastructure.Repositories;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.OpenApi.Models;
+using NLog;
 
 namespace Catalog.API.Extensions;
 
@@ -22,14 +20,17 @@ public static class RegisterServicesExtensions
     /// </returns>
     public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
     {
+        LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+        
+        builder.Services.AddCorsConfigure();
         builder.Services.AddApiVersioning();
         builder.Services.AddAutoMapper(typeof(CatalogProfile));
-        builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateProductHandler).Assembly));
+        builder.Services.AddMediatrConfigure();
+        builder.Services.AddLoggerConfigure();
         builder.Services.AddScoped<ICatalogContext, CatalogContext>();
-        builder.Services.AddScoped<IProductRepository, ProductRepository>();
-        builder.Services.AddHealthChecks().AddMongoDb(builder.Configuration["Databasesetting:ConnectionString"]!, "Catalog Mongo Db Health Check", HealthStatus.Degraded);
-        builder.Services.AddSwaggerGen(opt => opt.SwaggerDoc("v1", new OpenApiInfo{ Title = "Catalog.API", Version = "v1" }));
-
+        builder.Services.AddRepositoryManagerConfigure();
+        builder.Services.AddHealthChecksConfigure(builder.Configuration);
+        builder.Services.AddSwaggerConfigure();
         builder.Services.AddControllers();
         
         return builder;

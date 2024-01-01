@@ -1,7 +1,7 @@
 {
     "Routes": [
         {
-          "DownstreamPathTemplate": "/api/v1/Catalog",
+          "DownstreamPathTemplate": "/api/v1/Products",
           "DownstreamScheme": "http",
           "DownstreamHostAndPorts": [
             {
@@ -9,12 +9,25 @@
               "Port": "8000"
             }
           ],
-          "UpstreamPathTemplate": "/Catalog",
+          "UpstreamPathTemplate": "/Products",
           "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
           "FileCacheOptions": { "TtlSeconds": 30 }
         },
         {
-            "DownstreamPathTemplate": "/api/v1/Catalog/{id}",
+          "DownstreamPathTemplate": "/api/v1/Products/{paged}",
+          "DownstreamScheme": "http",
+          "DownstreamHostAndPorts": [
+            {
+              "Host": "localhost",
+              "Port": "8000"
+            }
+          ],
+          "UpstreamPathTemplate": "/Products/{paged}",
+          "UpstreamHttpMethod": [ "GET" ],
+          "FileCacheOptions": { "TtlSeconds": 30 }
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/Products/{id}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
               {
@@ -22,11 +35,11 @@
                 "Port": "8000"
               }
             ],
-            "UpstreamPathTemplate": "/Catalog/{id}",
+            "UpstreamPathTemplate": "/Products/{id}",
             "UpstreamHttpMethod": [ "GET", "DELETE" ]
         },
         {
-            "DownstreamPathTemplate": "/api/v1/Catalog/GetProductByCategory/{category}",
+            "DownstreamPathTemplate": "/api/v1/Products/GetProductByCategory/{category}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
               {
@@ -34,7 +47,7 @@
                 "Port": "8000"
               }
             ],
-            "UpstreamPathTemplate": "/Catalog/GetProductByCategory/{category}",
+            "UpstreamPathTemplate": "/Products/GetProductByCategory/{category}",
             "UpstreamHttpMethod": [ "GET" ]
         },
         {

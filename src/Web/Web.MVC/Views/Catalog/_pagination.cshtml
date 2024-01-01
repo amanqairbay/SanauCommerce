@@ -1,0 +1,37 @@
+@model Web.MVC.ViewModels.Pagination.PaginationInfo
+
+<div class="d-flex justify-content-between">
+    <ul class="pagination">
+        <li class="page-item @Model.Previous">
+            <a class="page-link" 
+                    asp-controller="Catalog"
+                    asp-action="Index"
+                    asp-route-page="@(Model.ActualPage -1)"
+                    aria-label="Previous">
+                <i class="ri-arrow-left-s-line me-1"></i>Prev @Model.ActualPage
+            </a>
+        </li>
+    </ul>
+
+    <ul class="pagination">
+        @for (var i = 1; i <= Model.TotalPages; i++)
+        {
+            <li class="page-item @(i == Model.ActualPage ? "active" : "")">
+                <a asp-controller="Catalog" asp-action="Index" asp-route-page="@i" class="page-link">@i</a>
+            </li>
+        }
+    </ul>
+
+    <ul class="pagination">
+        
+        <li class="page-item @Model.Next">
+            <a class="page-link"                
+                    asp-controller="Catalog"
+                    asp-action="Index"
+                    asp-route-page="@(Model.ActualPage + 1)"
+                    aria-label="Next">
+                Next<i class="ms-1 ri-arrow-right-s-line"></i>
+            </a>
+        </li>
+    </ul>
+</div>

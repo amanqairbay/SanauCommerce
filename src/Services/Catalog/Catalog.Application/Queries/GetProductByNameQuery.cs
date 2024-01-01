@@ -6,7 +6,7 @@ namespace Catalog.Application.Queries;
 /// <summary>
 /// Represents a request to get product by name.
 /// </summary>
-public class GetProductByNameQuery : IRequest<IReadOnlyList<ProductResponse>>
+public class GetProductByNameQuery : IRequest<ProductResponse>
 {
     /// <summary>
     /// Gets or sets a name.

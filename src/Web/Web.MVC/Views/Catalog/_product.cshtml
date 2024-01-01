@@ -1,0 +1,53 @@
+@model Product
+
+<div class="card card-product border h-100">
+    <!-- Buttons -->
+    <div class="product-buttons">
+        <button class="btn-product btn-wishlist" type="button" data-bs-toggle="button" autocomplete="off" title="Add to wishlist">
+            <i class="ri-heart-line"></i>
+        </button>
+        <a class="btn-product btn-compare" href="#" title="Compare product">
+            <i class="ri-repeat-line"></i>
+        </a>
+        <a class="btn-product btn-view" href="#modal-quick-view" data-bs-toggle="modal" title="Quick preview">
+            <i class="ri-eye-line"></i>
+        </a>
+    </div>
+    <!-- Buttons -->
+
+    <!-- Preview Image -->
+    <a class="card-img-top d-block overflow-hidden flex-shrink-0" asp-controller="Catalog" asp-action="ProductDetails" asp-route-name="@Model.Name">
+        <img class="img-fluid" src="~/img/product-card/@Model.ImageFile" alt="Product">
+    </a>
+    <!-- Preview Image -->
+
+    <div class="card-body d-flex flex-column align-items-start flex-grow-1 h-100 rounded-3 py-4">
+        <!-- Product Category -->
+        <a class="product-category d-block link-dark fs-sm pb-1" href="#">@Model.Category</a>
+        <!-- Product Category -->
+
+        <!-- Product Title -->
+        <h3 class="product-title flex-grow-1">
+            <a href="#">@Model.Name</a>
+        </h3>
+        <!-- Product Title -->
+
+        <!-- Star Rating -->
+        <span class="star-rating star-8"></span>
+        <!-- Star Rating -->
+
+        <div class="d-flex align-items-center justify-content-between w-100">
+            <!-- Product Price -->
+            <div class="product-price">
+                <span class="text-danger d-block mb-n2 fs-5">$@Model.Price
+                </span>
+            </div>
+            <!-- Product Price -->
+
+            <!-- Button -->
+            <button class="btn btn-sm btn-outline-primary py-1 px-3" title="Add to cart" type="button"><i
+                    class="ri-shopping-cart-line fs-5"></i></button>
+            <!-- Button -->
+        </div>
+    </div>
+</div>
