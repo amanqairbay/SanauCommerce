@@ -2,8 +2,6 @@ using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Ordering.Infrastructure.Persistence;
 
-#nullable disable
-
 namespace Ordering.API.Extensions;
 
 /// <summary>
@@ -29,25 +27,12 @@ public static class RegisterMiddlewaresExtensions
 
         app.UseHttpsRedirection();
         app.UseRouting();
-
-    #pragma warning disable ASP0014 // Suggest using top level route registrations
-
-        app.UseEndpoints(cfg =>
-        {
-            cfg.MapControllers();
-            cfg.MapHealthChecks("/health", new HealthCheckOptions
-            {
-                Predicate = _ => true,
-                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-            });
-        });
-    
-    #pragma warning restore ASP0014 // Suggest using top level route registrations
+        app.MapControllers();
+        app.MapHealthChecks("/health", new HealthCheckOptions { Predicate = _ => true, ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse });
 
         app.MigrateDatabase<OrderContext>((context, services) =>
         {
             var logger = services.GetService<ILogger<OrderContextSeed>>();
-            
             OrderContextSeed.SeedAsync(context, logger).Wait();
         });
 

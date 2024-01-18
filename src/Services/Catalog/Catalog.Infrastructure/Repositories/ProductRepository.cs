@@ -2,7 +2,6 @@ using Catalog.Core.Entities;
 using Catalog.Core.Repositories;
 using Catalog.Core.RequestFeatures;
 using Catalog.Infrastructure.Data;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Repositories;
@@ -137,7 +136,7 @@ public class ProductRepository : IProductRepository
     /// <summary>
     /// Gets a product by name.
     /// </summary>
-    /// <param name="id">Product name.</param>
+    /// <param name="name">Product name.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
@@ -170,14 +169,14 @@ public class ProductRepository : IProductRepository
     /// <summary>
     /// Gets the product by type.
     /// </summary>
-    /// <param name="typeName">Product type name.</param>
+    /// <param name="typeId">Product type identifier.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    public async Task<IReadOnlyList<Product>> GetByTypeAsync(string typeName)
+    public async Task<IReadOnlyList<Product>> GetByTypeAsync(string typeId)
     {
-        FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Type.Name, typeName);
+        FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Type.Id, typeId);
         
         return await _context
                 .Products

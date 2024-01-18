@@ -14,6 +14,7 @@ public sealed class RepositoryManager : IRepositoryManager
     private readonly ICatalogContext _catalogContext;
     private readonly Lazy<IProductRepository> _productRepository;
     private readonly Lazy<IProductBrandRepository> _productBrandRepository;
+    private readonly Lazy<IProductImageRepository> _productImageRepository;
     private readonly Lazy<IProductTypeRepository> _productTypeRepository;
 
     #endregion fields
@@ -24,6 +25,7 @@ public sealed class RepositoryManager : IRepositoryManager
         
         _productRepository = new Lazy<IProductRepository>(() => new ProductRepository(_catalogContext));
         _productBrandRepository = new Lazy<IProductBrandRepository>(() => new ProductBrandRepository(_catalogContext));
+        _productImageRepository = new Lazy<IProductImageRepository>(() => new ProductImageRepository(_catalogContext));
         _productTypeRepository = new Lazy<IProductTypeRepository>(() => new ProductTypeRepository(_catalogContext));
     }
 
@@ -36,6 +38,11 @@ public sealed class RepositoryManager : IRepositoryManager
     /// Gets a product barnd repositiory.
     /// </summary>
     public IProductBrandRepository ProductBrand => _productBrandRepository.Value;
+
+    /// <summary>
+    /// Gets a product image repositiory.
+    /// </summary>
+    public IProductImageRepository ProductImage => _productImageRepository.Value;
 
     /// <summary>
     /// Gets a product type repositiory.

@@ -35,12 +35,6 @@ public class ProductResponse
     public string Description { get; set; } = String.Empty;
 
     /// <summary>
-    /// Gets or sets an image file.
-    /// </summary>
-    [BsonElement("ImageFile")]
-    public string ImageFile { get; set; } = String.Empty;
-
-    /// <summary>
     /// Gets or sets a brand.
     /// </summary>
     [BsonElement("Brand")]
@@ -51,6 +45,12 @@ public class ProductResponse
     /// </summary>
     [BsonElement("Type")]
     public ProductType Type { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets images.
+    /// </summary>
+    [BsonElement("Images")]
+    public ICollection<ProductImage> Images { get; set; } = default!; 
 
     /// <summary>
     /// Gets or sets a price.

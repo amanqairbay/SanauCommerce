@@ -10,7 +10,7 @@ namespace Ordering.Application.Behaviours;
 /// <typeparam name="TResponse">Response type.</typeparam>
 public class UnhandledExceptionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
 {
-    private readonly ILogger<TRequest> _logger;
+    private readonly ILogger _logger;
 
     public UnhandledExceptionBehaviour(ILogger<TRequest> logger)
     {

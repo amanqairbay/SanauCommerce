@@ -9,13 +9,13 @@ public static class CatalogMapper
 {
     private static readonly Lazy<IMapper> LazyMapper = new(() =>
 	{
-		var configuration = new MapperConfiguration(cfg =>
+		var mapperConfiguration = new MapperConfiguration(configure =>
 		{
-			cfg.ShouldMapProperty = p => p.GetMethod!.IsPublic || p.GetMethod.IsAssembly;
-			cfg.AddProfile<CatalogProfile>();
+			configure.ShouldMapProperty = p => p.GetMethod!.IsPublic || p.GetMethod.IsAssembly;
+			configure.AddProfile<CatalogProfile>();
 		});
 
-		var mapper = configuration.CreateMapper();
+		var mapper = mapperConfiguration.CreateMapper();
         
 		return mapper;
 	});

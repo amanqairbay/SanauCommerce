@@ -70,7 +70,7 @@
                     "Port": "80"
                 }
             ],
-            "UpstreamPathTemplate": "/Products/PoCreatest",
+            "UpstreamPathTemplate": "/Products/Create",
             "UpstreamHttpMethod": [ "POST" ]
         },
         {
@@ -96,6 +96,30 @@
             ],
             "UpstreamPathTemplate": "/Products/Delete/{id}",
             "UpstreamHttpMethod": [ "DELETE" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/Photo/productPhoto/{name}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/Photos/productPhoto/{name}",
+            "UpstreamHttpMethod": [ "Get" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/Photo/productPhotoCreate",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/Photos/productPhotoCreate",
+            "UpstreamHttpMethod": [ "POST" ]
         },
         {
             "DownstreamPathTemplate": "/api/v1/Basket/{username}",

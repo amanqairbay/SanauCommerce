@@ -24,6 +24,11 @@ public class CatalogContext : ICatalogContext
     /// </summary>
     public IMongoCollection<ProductType> ProductTypes { get; }
 
+    /// <summary>
+    /// Gets the product images.
+    /// </summary>
+    public IMongoCollection<ProductImage> ProductImages { get; }
+
     public CatalogContext(IConfiguration configuration)
     {
         var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
@@ -32,7 +37,8 @@ public class CatalogContext : ICatalogContext
         Products = database.GetCollection<Product>(configuration["DatabaseSettings:CollectionName"]);
         ProductBrands = database.GetCollection<ProductBrand>(configuration["DatabaseSettings:ProductBrandsCollection"]);
         ProductTypes = database.GetCollection<ProductType>(configuration["DatabaseSettings:ProductTypesCollection"]);
+        ProductImages = database.GetCollection<ProductImage>(configuration["DatabaseSettings:ProductImageCollection"]);
 
-        CatalogContextSeed.SeedData(Products, ProductBrands, ProductTypes);
+        CatalogContextSeed.SeedData(Products, ProductBrands, ProductTypes, ProductImages);
     }
 }

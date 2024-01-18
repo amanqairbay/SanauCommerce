@@ -60,12 +60,12 @@ public interface IProductRepository
     /// <summary>
     /// Gets the product by type.
     /// </summary>
-    /// <param name="typeName">Product type name.</param>
+    /// <param name="typeId">Product type identifier.</param>
     /// <returns>
     /// A task that represents the asynchronous operation.
     /// The task result contains the product.
     /// </returns>
-    Task<IReadOnlyList<Product>> GetByTypeAsync(string typeName);
+    Task<IReadOnlyList<Product>> GetByTypeAsync(string typeId);
 
     /// <summary>
     /// Creates a new product.

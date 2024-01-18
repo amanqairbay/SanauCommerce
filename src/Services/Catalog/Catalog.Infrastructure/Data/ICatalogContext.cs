@@ -22,4 +22,9 @@ public interface ICatalogContext
     /// Gets the product types.
     /// </summary>
     IMongoCollection<ProductType> ProductTypes { get; }
+
+    /// <summary>
+    /// Gets the product images.
+    /// </summary>
+    IMongoCollection<ProductImage> ProductImages { get; }
 }

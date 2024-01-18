@@ -16,6 +16,11 @@ public interface IRepositoryManager
     IProductBrandRepository ProductBrand { get; }
 
     /// <summary>
+    /// Gets a product image repositiory.
+    /// </summary>
+    IProductImageRepository ProductImage { get; }
+
+    /// <summary>
     /// Gets a product type repositiory.
     /// </summary>
     IProductTypeRepository ProductType { get; }

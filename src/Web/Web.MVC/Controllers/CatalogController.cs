@@ -48,7 +48,6 @@ public class CatalogController : Controller
     [HttpGet("catalog/p/{name?}")]
     public async Task<IActionResult> ProductDetails(string name)
     {
-        name = "Apple MacBook Pro 14 1Tb Silver";
         var vm = await _catalogService.GetCatalogByName(name);
 
         return View(vm);

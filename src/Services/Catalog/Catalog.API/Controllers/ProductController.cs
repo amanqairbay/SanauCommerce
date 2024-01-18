@@ -1,10 +1,15 @@
 using System.Net;
-using Catalog.Application.Commands;
-using Catalog.Application.Queries;
+using Microsoft.AspNetCore.Mvc;
+using Catalog.Application.Features.ProductFeatures.Commands.DeleteProduct;
+using Catalog.Application.Features.ProductFeatures.Commands.UpdateProduct;
+using Catalog.Application.Features.ProductFeatures.Queries.GetProductById;
+using Catalog.Application.Features.ProductFeatures.Queries.GetProductByName;
+using Catalog.Application.Features.ProductFeatures.Queries.GetProductByType;
+using Catalog.Application.Features.ProductFeatures.Queries.GetProductList;
+using Catalog.Application.Features.ProductFeatures.Queries.GetProductPagedList;
 using Catalog.Application.Responses;
 using Catalog.Core.RequestFeatures;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Catalog.API.Controllers;
 

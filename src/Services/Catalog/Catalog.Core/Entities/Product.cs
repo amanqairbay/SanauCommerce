@@ -1,5 +1,3 @@
-using System.Data;
-using System.Runtime.CompilerServices;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -29,22 +27,22 @@ public class Product : BaseEntity
     public string Description { get; set; } = String.Empty;
 
     /// <summary>
-    /// Gets or sets an image file.
+    /// Gets or sets a brand identifier.
     /// </summary>
-    [BsonElement("ImageFile")]
-    public string ImageFile { get; set; } = String.Empty;
+    [BsonElement("BrandId")]
+    public string BrandId { get; set; } = String.Empty;
 
     /// <summary>
-    /// Gets or sets a brand.
+    /// Gets or sets a type identifier.
     /// </summary>
-    [BsonElement("Brand")]
-    public ProductBrand Brand { get; set; } = default!;
+    [BsonElement("TypeId")]
+    public string TypeId { get; set; } = String.Empty;
 
     /// <summary>
-    /// Gets or sets a type.
+    /// Gets or sets image identifiers.
     /// </summary>
-    [BsonElement("Type")]
-    public ProductType Type { get; set; } = default!;
+    [BsonElement("ImageIds")]
+    public List<string> ImageIds { get; set; } = default!; 
 
     /// <summary>
     /// Gets or sets a price.
