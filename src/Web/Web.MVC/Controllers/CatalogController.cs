@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Web.MVC.Services;
-using Web.MVC.ViewModels;
 using Web.MVC.ViewModels.CatalogViewModels;
 using Web.MVC.ViewModels.Pagination;
 
@@ -45,11 +44,12 @@ public class CatalogController : Controller
         return View(vm);
     }
     
-    [HttpGet("catalog/p/{name?}")]
-    public async Task<IActionResult> ProductDetails(string name)
+    [HttpGet("catalog/p/{seName}", Name = "ProductDetails")]
+    public async Task<IActionResult> ProductDetails(string seName)
     {
-        var vm = await _catalogService.GetCatalogByName(name);
+        //var photo = await _catalogService.GetProductImageByName(name);
+        var product = await _catalogService.GetCatalogBySeName(seName);
 
-        return View(vm);
+        return View(product);
     }
 }

@@ -50,6 +50,18 @@
             "UpstreamHttpMethod": [ "GET" ]
         },
         {
+            "DownstreamPathTemplate": "/api/v1/Product/seName/{seName}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/Products/seName/{seName}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
             "DownstreamPathTemplate": "/api/v1/Product/type/{type}",
             "DownstreamScheme": "http",
             "DownstreamHostAndPorts": [
@@ -108,6 +120,54 @@
             ],
             "UpstreamPathTemplate": "/Photos/productPhoto/{name}",
             "UpstreamHttpMethod": [ "Get" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/ProductType/list",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/ProductTypes",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/ProductType/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/ProductTypes/{id}",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/ProductBrand/list",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/ProductBrands",
+            "UpstreamHttpMethod": [ "GET" ]
+        },
+        {
+            "DownstreamPathTemplate": "/api/v1/ProductBrand/{id}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "catalog.api",
+                    "Port": "80"
+                }
+            ],
+            "UpstreamPathTemplate": "/ProductBrands/{id}",
+            "UpstreamHttpMethod": [ "GET" ]
         },
         {
             "DownstreamPathTemplate": "/api/v1/Photo/productPhotoCreate",

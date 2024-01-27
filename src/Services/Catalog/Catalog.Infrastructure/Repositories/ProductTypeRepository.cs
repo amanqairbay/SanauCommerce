@@ -19,4 +19,18 @@ public class ProductTypeRepository : IProductTypeRepository
             .ProductTypes
             .Find(pt => true)
             .ToListAsync();
+
+    /// <summary>
+    /// Gets a product type by identifier.
+    /// </summary>
+    /// <param name="id">Product type identifier.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains the product type.
+    /// </returns>
+    public async Task<ProductType> GetByIdAsync(string id) =>
+        await _context
+            .ProductTypes
+            .Find(pt => pt.Id == id)
+            .FirstOrDefaultAsync();
 }

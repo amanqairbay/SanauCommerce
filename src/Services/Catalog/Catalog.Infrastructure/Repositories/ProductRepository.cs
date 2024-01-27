@@ -146,6 +146,20 @@ public class ProductRepository : IProductRepository
             .Products
             .Find(p => p.Name == name)
             .FirstOrDefaultAsync();
+
+    /// <summary>
+    /// Gets a product by search engine friendly page name..
+    /// </summary>
+    /// <param name="name">Product search engine friendly page name..</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains the product.
+    /// </returns>
+    public async Task<Product> GetBySeNameAsync(string seName) =>
+        await _context
+            .Products
+            .Find(p => p.SeName == seName)
+            .FirstOrDefaultAsync();
     
 
     /// <summary>

@@ -1,7 +1,3 @@
-using Catalog.Application.Exceptions;
-using Catalog.Core.Entities;
-using Catalog.Core.Logging;
-using Catalog.Core.Repositories;
 using Catalog.Core.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;

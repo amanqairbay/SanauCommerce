@@ -1,5 +1,6 @@
 using Catalog.Application.Features.ProductImageFeatures.Commands.CreateProductImage;
 using Catalog.Application.Features.ProductImageFeatures.Queries.GetProductImage;
+using Catalog.Application.Features.ProductImageFeatures.Queries.GetProductImageByName;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,38 +9,24 @@ namespace Catalog.API.Controllers;
 public class PhotoController : ApiController
 {
     private readonly IMediator _mediator;
-    private readonly IWebHostEnvironment _env;
 
-    public PhotoController(IMediator mediator, IWebHostEnvironment env)
+    public PhotoController(IMediator mediator)
     {
         _mediator = mediator;
-        _env = env;
     }
 
-    [HttpGet("{name}", Name = "GetProductImageByName")]
-    public async Task<IActionResult> GetPhotoById(string name)
+    [HttpGet("{id}", Name = "GetProductImageById")]
+    public async Task<IActionResult> GetPhotoById(string id)
     {
-        var productImage = await _mediator.Send(new GetProductImageQuery(name));
+        var photoResponse = await _mediator.Send(new GetProductImageQuery(id));
 
-        if (productImage != null)
-        {
-            var webRoot = _env.WebRootPath;
-            var path = Path.Combine(webRoot, $"img{Path.DirectorySeparatorChar}product-card/" + productImage.Name);
-
-            string imageFileExtension = Path.GetExtension(productImage.Name);
-
-            var buffer = await System.IO.File.ReadAllBytesAsync(path);
-
-            return File(buffer, "image/png");
-        }
-
-        return NotFound();
+        return File(photoResponse.Buffer, photoResponse.FileExtension);
     }
 
     [HttpGet("productPhoto/{name}")]
     public async Task<IActionResult> GetProductImageByNameAsync(string name)
     {
-        var productImage = await _mediator.Send(new GetProductImageQuery(name));
+        var productImage = await _mediator.Send(new GetProductImageByNameQuery(name));
 
         return Ok(productImage);
     }

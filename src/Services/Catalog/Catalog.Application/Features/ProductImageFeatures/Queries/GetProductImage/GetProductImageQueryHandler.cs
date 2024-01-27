@@ -1,23 +1,23 @@
-using AutoMapper;
 using Catalog.Application.Exceptions;
 using Catalog.Application.Responses;
 using Catalog.Core.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Catalog.Application.Features.ProductImageFeatures.Queries.GetProductImage;
 
 /// <summary>
 /// Represents a handler to get product image by name.
 /// </summary>
-public class GetProductImageQueryHandler : IRequestHandler<GetProductImageQuery, ProductImageResponse>
+public class GetProductImageQueryHandler : IRequestHandler<GetProductImageQuery, PhotoResponse>
 {
-    private readonly IMapper _mapper;
     private readonly IRepositoryManager _repository;
+    private readonly IWebHostEnvironment _environment;
 
-    public GetProductImageQueryHandler(IMapper mapper, IRepositoryManager repository)
+    public GetProductImageQueryHandler(IRepositoryManager repository, IWebHostEnvironment environment)
     {
-        _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+        _environment = environment ?? throw new ArgumentNullException(nameof(repository));
     }
 
     /// <summary>
@@ -29,13 +29,36 @@ public class GetProductImageQueryHandler : IRequestHandler<GetProductImageQuery,
     /// A task that represents the asynchronous operation.
     /// The task result contains the product image.
     /// </returns>
-    public async Task<ProductImageResponse> Handle(GetProductImageQuery request, CancellationToken cancellationToken)
+    public async Task<PhotoResponse> Handle(GetProductImageQuery request, CancellationToken cancellationToken)
     {
-        var productImage = await _repository.ProductImage.GetByNameAsync(request.Name)
-            ?? throw new NotFoundException($"The product image with {request.Name} doesn't exist in the database.");
-            
-        var productImageResponse = _mapper.Map<ProductImageResponse>(productImage);
+        var productImage = await _repository.ProductImage.GetByNameAsync(request.ProductImageId)
+            ?? throw new NotFoundException($"The product image with {request.ProductImageId} doesn't exist in the database.");
 
-        return productImageResponse;
+        var webRoot = _environment.WebRootPath;
+        var path = Path.Combine(webRoot, $"img{Path.DirectorySeparatorChar}products/" + productImage.Name);
+
+        string imageFileExtension = Path.GetExtension(productImage.Name);
+        string mimetype = GetImageMimeTypeFromImageFileExtension(imageFileExtension);
+
+        var buffer = await System.IO.File.ReadAllBytesAsync(path);
+
+        return new PhotoResponse { Buffer = buffer, FileExtension = mimetype };
+    }
+
+    private static string GetImageMimeTypeFromImageFileExtension(string extension)
+    {
+        string mimetype = extension switch
+        {
+            ".png" => "image/png",
+            ".gif" => "image/gif",
+            ".jpg" or ".jpeg" => "image/jpeg",
+            ".bmp" => "image/bmp",
+            ".tiff" => "image/tiff",
+            ".wmf" => "image/wmf",
+            ".jp2" => "image/jp2",
+            ".svg" => "image/svg+xml",
+            _ => "application/octet-stream",
+        };
+        return mimetype;
     }
 }

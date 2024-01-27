@@ -1,4 +1,4 @@
-using Catalog.Application.Handlers;
+using Catalog.Application.Features.ProductFeatures.Commands.UpdateProduct;
 using Catalog.Core.Logging;
 using Catalog.Core.Repositories;
 using Catalog.Infrastructure.Logging;
@@ -22,7 +22,7 @@ public static class CatalogServicesExtensions
     // MesiatR
     public static void AddMediatrConfigure(this IServiceCollection services) =>
         services.AddMediatR(configuration => 
-            configuration.RegisterServicesFromAssembly(typeof(CreateProductHandler).Assembly));
+            configuration.RegisterServicesFromAssembly(typeof(CreateProductCommandHandler).Assembly));
 
     // Health Checks
     public static void AddHealthChecksConfigure(this IServiceCollection services, IConfiguration configuration) =>

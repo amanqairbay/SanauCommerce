@@ -74,6 +74,36 @@ public class CatalogService : ICatalogService
         //return await response.ReadContentAs<Product>();
     }
 
+    public async Task<Product> GetCatalogBySeName(string seName)
+    {
+        var response = await _client.GetAsync($"/Products/seName/{seName}");
+        var content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ApplicationException($"Something went wrong calling the API: {content}");
+        }
+
+        var product = JsonSerializer.Deserialize<Product>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        return product;
+    }
+
+    public async Task<ProductImage> GetProductImageByName(string name)
+    {
+        var response = await _client.GetAsync($"/Photos/productPhoto/{name}");
+        var content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ApplicationException($"Something went wrong calling the API: {content}");
+        }
+
+        var productImage = JsonSerializer.Deserialize<ProductImage>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        return productImage;
+    }
+
     public async Task<IEnumerable<Product>> GetCatalogByCategory(string category)
     {
         var response = await _client.GetAsync($"/Products/category/{category}");

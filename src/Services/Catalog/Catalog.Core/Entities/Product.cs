@@ -27,27 +27,33 @@ public class Product : BaseEntity
     public string Description { get; set; } = String.Empty;
 
     /// <summary>
-    /// Gets or sets a brand identifier.
+    /// Gets or sets a search engine friendly page name.
     /// </summary>
-    [BsonElement("BrandId")]
-    public string BrandId { get; set; } = String.Empty;
+    [BsonElement("SeName")]
+    public string SeName { get; set; } = String.Empty;
 
     /// <summary>
-    /// Gets or sets a type identifier.
+    /// Gets or sets a product brand.
     /// </summary>
-    [BsonElement("TypeId")]
-    public string TypeId { get; set; } = String.Empty;
+    [BsonElement("Brand")]
+    public ProductBrand Brand { get; set; } = default!;
 
     /// <summary>
-    /// Gets or sets image identifiers.
+    /// Gets or sets a product type.
     /// </summary>
-    [BsonElement("ImageIds")]
-    public List<string> ImageIds { get; set; } = default!; 
+    [BsonElement("Type")]
+    public ProductType Type { get; set; } = default!;
+
+    /// <summary>
+    /// Gets or sets images.
+    /// </summary>
+    [BsonElement("Images")]
+    public List<ProductImage> Images { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets a price.
     /// </summary>
     [BsonElement("Price")]
     [BsonRepresentation(BsonType.Decimal128)]
-    public decimal Price { get; set; }
+    public decimal Price { get; set; } 
 }

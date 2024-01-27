@@ -36,13 +36,19 @@ public class UpdateProductCommand : IRequest<bool>
     public string Description { get; set; } = String.Empty;
 
     /// <summary>
-    /// Gets or sets a brand.
+    /// Gets or sets a search engine friendly page name.
+    /// </summary>
+    [BsonElement("SeName")]
+    public string SeName { get; set; } = String.Empty;
+
+    /// <summary>
+    /// Gets or sets a product brand.
     /// </summary>
     [BsonElement("Brand")]
     public ProductBrand Brand { get; set; } = default!;
 
     /// <summary>
-    /// Gets or sets a type.
+    /// Gets or sets a product type.
     /// </summary>
     [BsonElement("Type")]
     public ProductType Type { get; set; } = default!;

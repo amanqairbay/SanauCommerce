@@ -48,6 +48,16 @@ public interface IProductRepository
     Task<Product> GetByNameAsync(string name);
 
     /// <summary>
+    /// Gets a product by search engine friendly page name.
+    /// </summary>
+    /// <param name="name">Product search engine friendly page name..</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains the product.
+    /// </returns>
+    Task<Product> GetBySeNameAsync(string seName);
+
+    /// <summary>
     /// Gets the products by name.
     /// </summary>
     /// <param name="name">Product name.</param>

@@ -14,10 +14,6 @@ public class CreateProductImageCommandValidator : AbstractValidator<CreateProduc
             .NotNull()
             .MaximumLength(100).WithMessage("{Name} must not exceed 100 characters.");
 
-        RuleFor(p => p.ProductId)
-           .NotEmpty().WithMessage("{ProductId} is required.")
-           .NotNull();
-
         RuleFor(p => p.IsMain)
             .NotEmpty().WithMessage("{IsMain} is required.")
             .NotNull();

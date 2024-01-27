@@ -48,10 +48,14 @@ public class CreateProductImageCommandHandler : IRequestHandler<CreateProductIma
             throw new BadRequestException(message: fileSaveResult.Item2);
         }
 
+        var productFromDb = await _repository.Product.GetByIdAsync(command.ProductId) 
+            ?? throw new BadRequestException($"The product with {command.Id} doesn't exists in the database."); 
+
         var newProductImage = new ProductImage
         {
             Name = fileSaveResult.Item2,
-            IsMain = command.IsMain
+            IsMain = command.IsMain,
+            ProductId = command.ProductId
         };
 
         // var productImage = _mapper.Map<ProductImage>(command) ?? throw new BadRequestException("There is an issue mapping while creating new product image.");

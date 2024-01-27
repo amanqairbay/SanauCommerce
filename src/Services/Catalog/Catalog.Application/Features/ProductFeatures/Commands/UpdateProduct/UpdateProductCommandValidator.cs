@@ -47,6 +47,7 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
            .NotNull()
            .MaximumLength(200).WithMessage("{Type.Name} must not exceed 200 characters.");
 
+        /*
         RuleForEach(command => command.Images)
             .ChildRules( image => 
             {
@@ -61,6 +62,7 @@ public class UpdateProductCommandValidator : AbstractValidator<UpdateProductComm
                     .NotEmpty().WithMessage("{ProductId} is required.")
                     .NotNull();
             });
+        */
         
         RuleFor(command => command.Price)
             .NotEmpty().WithMessage("{Price} is required.")

@@ -35,6 +35,12 @@ public class ProductResponse
     public string Description { get; set; } = String.Empty;
 
     /// <summary>
+    /// Gets or sets a search engine friendly page name.
+    /// </summary>
+    [BsonElement("SeName")]
+    public string SeName { get; set; } = String.Empty;
+
+    /// <summary>
     /// Gets or sets a brand.
     /// </summary>
     [BsonElement("Brand")]

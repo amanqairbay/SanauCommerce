@@ -10,6 +10,7 @@ using Catalog.Application.Features.ProductFeatures.Queries.GetProductPagedList;
 using Catalog.Application.Responses;
 using Catalog.Core.RequestFeatures;
 using MediatR;
+using Catalog.Application.Features.ProductFeatures.Queries.GetProductBySeName;
 
 namespace Catalog.API.Controllers;
 
@@ -60,6 +61,17 @@ public class ProductController : ApiController
     public async Task<IActionResult> GetProductByNameAsync(string name)
     {
         var product = await _mediator.Send(new GetProductByNameQuery(name));
+        
+        return Ok(product);
+    }
+
+    // GET: api/v1/[controller]/name/{name}
+    [HttpGet("seName/{seName:minlength(1)}", Name = "GetBySeName")]
+    [ProducesResponseType((int)HttpStatusCode.NotFound)]
+    [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> GetProductBySeNameAsync(string seName)
+    {
+        var product = await _mediator.Send(new GetProductBySeNameQuery(seName));
         
         return Ok(product);
     }

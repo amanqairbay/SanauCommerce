@@ -6,15 +6,15 @@ namespace Catalog.Application.Features.ProductImageFeatures.Queries.GetProductIm
 /// <summary>
 /// Represents a request to get product image by name.
 /// </summary>
-public class GetProductImageQuery : IRequest<ProductImageResponse>
+public class GetProductImageQuery : IRequest<PhotoResponse>
 {
     /// <summary>
-    /// Gets or sets a name.
+    /// Gets or sets a product identifier.
     /// </summary>
-    public string Name { get; set; } = String.Empty;
+    public string ProductImageId { get; set; } = String.Empty;
 
-    public GetProductImageQuery(string name)
+    public GetProductImageQuery(string productImageId)
     {
-        Name = name;
+        ProductImageId = productImageId;
     }
 }

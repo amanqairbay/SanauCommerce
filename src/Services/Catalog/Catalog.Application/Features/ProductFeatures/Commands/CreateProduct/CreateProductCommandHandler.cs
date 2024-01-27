@@ -11,12 +11,12 @@ namespace Catalog.Application.Features.ProductFeatures.Commands.UpdateProduct;
 /// <summary>
 /// Represents a product create handler.
 /// </summary>
-public class CreateProductHandler : IRequestHandler<CreateProductCommand, ProductResponse>
+public class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, ProductResponse>
 {
     private readonly IMapper _mapper;
     private readonly IRepositoryManager _repository;
 
-    public CreateProductHandler(IFileService fileService, IMapper mapper, IRepositoryManager repository)
+    public CreateProductCommandHandler(IFileService fileService, IMapper mapper, IRepositoryManager repository)
     {
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         _repository = repository ?? throw new ArgumentNullException(nameof(repository));

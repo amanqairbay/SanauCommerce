@@ -19,4 +19,18 @@ public class ProductBrandRepository : IProductBrandRepository
             .ProductBrands
             .Find(pb => true)
             .ToListAsync();
+
+    /// <summary>
+    /// Gets a product brand by identifier.
+    /// </summary>
+    /// <param name="id">Product brand identifier.</param>
+    /// <returns>
+    /// A task that represents the asynchronous operation.
+    /// The task result contains the product brand.
+    /// </returns>
+    public async Task<ProductBrand> GetByIdAsync(string id) =>
+        await _context
+            .ProductBrands
+            .Find(pb => pb.Id == id)
+            .FirstOrDefaultAsync();
 }
