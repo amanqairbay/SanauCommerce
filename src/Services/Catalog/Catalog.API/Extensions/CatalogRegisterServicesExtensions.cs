@@ -39,6 +39,7 @@ public static class CatalogRegisterServicesExtensions
         builder.Services.AddScoped<IFileService, FileService>();
         builder.Services.AddRepositoryManagerConfigure();
         builder.Services.AddHealthChecksConfigure(builder.Configuration);
+        builder.Services.AddIdentityConfigure();
         builder.Services.AddSwaggerConfigure();
         builder.Services.AddControllers();
         

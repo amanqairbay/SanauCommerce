@@ -1,4 +1,5 @@
-using Catalog.Core.Entities;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Catalog.Application.Responses;
 
@@ -8,12 +9,27 @@ namespace Catalog.Application.Responses;
 public class PhotoResponse
 {
     /// <summary>
-    /// Gets or sets a buffer.
+    /// Gets or sets an identifier.
     /// </summary>
-    public byte[] Buffer { get; set; } = default!;
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; } = String.Empty;
+    
+    /// <summary>
+    /// Gets or sets a name.
+    /// </summary>
+    [BsonElement("Name")]
+    public string Name { get; set; } = String.Empty;
 
     /// <summary>
-    /// Gets or sets a file extension.
+    /// Gets or sets a product identifier.
     /// </summary>
-    public string FileExtension { get; set; } = String.Empty;
+    [BsonElement("ProductId")]
+    public string ProductId { get; set; } = String.Empty;
+
+    /// <summary>
+    /// Gets or sets a main image.
+    /// </summary>
+    [BsonElement("IsMain")]
+    public bool IsMain { get; set; }        
 }

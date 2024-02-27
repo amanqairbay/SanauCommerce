@@ -14,15 +14,15 @@ public class Config
        APIs can check the scopes that were included in the token to make authorization decisions.
        Scopes don’t have structure imposed by the protocols - they are just space-separated strings. 
        This allows for flexibility when designing the scopes used by a system. */
-    public static IEnumerable<ApiScope> ApiScopes => new ApiScope[] 
-    {
+    public static IEnumerable<ApiScope> ApiScopes =>
+    [
         new ApiScope("catalog_api", "Catalog API")
-    };
+    ];
 
 
     // Configure a client application that will be used to access the API.
-    public static IEnumerable<Client> Clients => new Client[] 
-    {
+    public static IEnumerable<Client> Clients =>
+    [
         new Client
         {
             ClientId = "sanau_mvc",
@@ -33,14 +33,14 @@ public class Config
             },
             AllowedScopes = { "catalog_api" }
         }
-    };
+    ];
 
-    public static IEnumerable<ApiResource> ApiResources => new ApiResource[] {};
+    public static IEnumerable<ApiResource> ApiResources => [];
 
     // Similar to OAuth, OpenID Connect uses scopes to represent something you want to protect and that clients want to access. 
     // In contrast to OAuth, scopes in OIDC represent identity data like user id, name or email address rather than APIs.
-    public static IEnumerable<IdentityResource> IdentityResources => new IdentityResource[] {};
+    public static IEnumerable<IdentityResource> IdentityResources => [];
 
     // We can use those users to login. Note that the test users' passwords match their usernames.
-    public static List<TestUser> TestUsers => new List<TestUser>{};
+    public static List<TestUser> TestUsers => [];
 }

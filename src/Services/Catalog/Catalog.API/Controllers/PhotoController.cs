@@ -1,6 +1,6 @@
-using Catalog.Application.Features.ProductImageFeatures.Commands.CreateProductImage;
-using Catalog.Application.Features.ProductImageFeatures.Queries.GetProductImage;
-using Catalog.Application.Features.ProductImageFeatures.Queries.GetProductImageByName;
+using Catalog.Application.Features.Photos.Commands.CreatePhoto;
+using Catalog.Application.Features.Photos.Queries.GetPhotoById;
+using Catalog.Application.Features.Photos.Queries.GetPhotoByName;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,27 +15,27 @@ public class PhotoController : ApiController
         _mediator = mediator;
     }
 
-    [HttpGet("{id}", Name = "GetProductImageById")]
+    [HttpGet("{id}", Name = "GetPhotoById")]
     public async Task<IActionResult> GetPhotoById(string id)
     {
-        var photoResponse = await _mediator.Send(new GetProductImageQuery(id));
+        var photoResponse = await _mediator.Send(new GetPhotoByIdQuery(id));
 
         return File(photoResponse.Buffer, photoResponse.FileExtension);
     }
 
     [HttpGet("productPhoto/{name}")]
-    public async Task<IActionResult> GetProductImageByNameAsync(string name)
+    public async Task<IActionResult> GetPhotoByNameAsync(string name)
     {
-        var productImage = await _mediator.Send(new GetProductImageByNameQuery(name));
+        var productImage = await _mediator.Send(new GetPhotoByNameQuery(name));
 
         return Ok(productImage);
     }
 
     [HttpPost("productPhotoCreate")]
-    public async Task<IActionResult> CreateProductImageAsync([FromForm] CreateProductImageCommand command)
+    public async Task<IActionResult> CreateProductImageAsync([FromForm] CreatePhotoCommand command)
     {
-        var productImageResponse = await _mediator.Send(command);
+        var photoResponse = await _mediator.Send(command);
 
-        return CreatedAtRoute("GetProductImageByName", new { name = productImageResponse.Name });
+        return CreatedAtRoute("GetProductImageByName", new { name = photoResponse.Name });
     }
 }

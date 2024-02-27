@@ -23,7 +23,6 @@ public static class RegisterMiddlewaresExtensions
         
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-
         app.UseRouting();
         //app.MapControllerRoute(name: "detail", pattern: "catalog/p/{name}",  new { Controller = "Catalog", action = "ProductDetails"});
         //app.MapControllerRoute(name: "pagination", pattern: "catalog", new { Controller = "Catalog", action = "Index"});

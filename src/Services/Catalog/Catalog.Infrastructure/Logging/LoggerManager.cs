@@ -1,4 +1,5 @@
-using Catalog.Core.Logging;
+
+using Catalog.Domain.Logging;
 using NLog;
 
 namespace Catalog.Infrastructure.Logging;

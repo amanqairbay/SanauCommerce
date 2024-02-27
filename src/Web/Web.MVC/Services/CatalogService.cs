@@ -20,13 +20,25 @@ public class CatalogService : ICatalogService
         return await response.ReadContentAs<List<Product>>();
     }
 
-    public async Task<Catalog> GetPagedCatalog(int page, int take)
+    public async Task<Catalog> GetPagedCatalog(int page, int take, string typeId, List<string> brands)
     {
-        var queryStringParam = new Dictionary<string, string>
+        var queryStringParam = new List<KeyValuePair<string, string>>();
+
+        queryStringParam.Add(new KeyValuePair<string, string>("pageIndex", page.ToString()));
+        queryStringParam.Add(new KeyValuePair<string, string>("pageSize", take.ToString()));
+        
+        if (typeId is not null)
         {
-            ["pageIndex"] = page.ToString(),
-            ["pageSize"] = take.ToString()
-        };
+            queryStringParam.Add(new KeyValuePair<string, string>("typeId", typeId));
+        }
+
+        if (brands is not null)
+        {
+            foreach (var brand in brands)
+            {
+                queryStringParam.Add(new KeyValuePair<string, string>("brandId", brand));
+            }
+        }
 
         var response = await _client.GetAsync(QueryHelpers.AddQueryString("products/paged", queryStringParam));
         var content = await response.Content.ReadAsStringAsync();
@@ -39,7 +51,6 @@ public class CatalogService : ICatalogService
         var catalog = JsonSerializer.Deserialize<Catalog>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
         return catalog;
-        // return await response.ReadContentAs<Catalog>();
     }
 
     public async Task<Product> GetCatalog(string id)
@@ -55,7 +66,6 @@ public class CatalogService : ICatalogService
         var product = JsonSerializer.Deserialize<Product>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
         return product;
-        //return await response.ReadContentAs<Product>();
     }
 
     public async Task<Product> GetCatalogByName(string name)
@@ -120,5 +130,65 @@ public class CatalogService : ICatalogService
         {
             throw new Exception("Something went wrong when calling api.");
         }
+    }
+
+    public async Task<List<ProductType>> GetProductTypes()
+    {
+        var response = await _client.GetAsync($"/ProductTypes");
+        var content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ApplicationException($"Something went wrong calling the API: {content}");
+        }
+
+        var productTypes = JsonSerializer.Deserialize<List<ProductType>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        return productTypes;
+    }
+
+    public async Task<ProductType> GetProductType(string id)
+    {
+        var response = await _client.GetAsync($"/ProductTypes/{id}");
+        var content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ApplicationException($"Something went wrong calling the API: {content}");
+        }
+
+        var productType = JsonSerializer.Deserialize<ProductType>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        return productType;
+    }
+
+    public async Task<List<ProductBrand>> GetProductBrands()
+    {
+        var response = await _client.GetAsync($"/ProductBrands");
+        var content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ApplicationException($"Something went wrong calling the API: {content}");
+        }
+
+        var productBrands = JsonSerializer.Deserialize<List<ProductBrand>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        return productBrands;
+    }
+
+    public async Task<ProductBrand> GetProductBrand(string id)
+    {
+        var response = await _client.GetAsync($"/ProductBrands/{id}");
+        var content = await response.Content.ReadAsStringAsync();
+
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ApplicationException($"Something went wrong calling the API: {content}");
+        }
+
+        var productBrand = JsonSerializer.Deserialize<ProductBrand>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+        return productBrand;
     }
 }

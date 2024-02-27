@@ -16,14 +16,14 @@ public class ProductParameters : RequestParameters
     public string? SearchTerm { get; set; }
 
     /// <summary>
-    /// Gets or sets a brand identifier.
+    /// Gets or sets a product manufacturer identifiers.
     /// </summary>
-    public List<string> BrandId { get; set; } = new();
+    public List<string> ProductManufacturerId { get; set; } = new();
 
     /// <summary>
-    /// Gets or sets a type identifier.
+    /// Gets or sets a product type identifier.
     /// </summary>
-    public string? TypeId { get; set; }
+    public string? ProductTypeId { get; set; }
 
     /// <summary>
     /// Gets or sets a product minimum price.

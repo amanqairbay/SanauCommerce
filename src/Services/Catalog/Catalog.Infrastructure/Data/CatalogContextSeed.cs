@@ -1,4 +1,5 @@
-using Catalog.Core.Entities;
+
+using Catalog.Domain.Entities;
 using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Data;
@@ -10,9 +11,10 @@ public class CatalogContextSeed
 {
     public static void SeedData(
         IMongoCollection<Product> productCollection, 
-        IMongoCollection<ProductBrand> productBrandsCollection,
-        IMongoCollection<ProductType> productTypesCollection,
-        IMongoCollection<ProductImage> productImageCollection)
+        IMongoCollection<ProductManufacturer> productManufacturerCollection,
+        IMongoCollection<ProductType> productTypeCollection,
+        IMongoCollection<Category> categoryCollection,
+        IMongoCollection<Picture> pictureCollection)
     {
         // add products
         bool existingProduct = productCollection.Find(p => true).Any();
@@ -21,31 +23,38 @@ public class CatalogContextSeed
             productCollection.InsertManyAsync(GetPreconfigurationProducts());
         }
 
-        // add product brands
-        bool existingProductBrand = productBrandsCollection.Find(pb => true).Any();
-        if (!existingProductBrand)
+        // add product manufacturers
+        bool existingManufacturer = productManufacturerCollection.Find(pm => true).Any();
+        if (!existingManufacturer)
         {
-            productBrandsCollection.InsertManyAsync(GetPreconfigurationProductBrands());
+            productManufacturerCollection.InsertManyAsync(GetPreconfigurationProductManufacturers());
         }
 
         // add product types
-        bool existingProductType = productTypesCollection.Find(pt => true).Any();
-        if (!existingProductType)
+        bool existingType = productTypeCollection.Find(pt => true).Any();
+        if (!existingType)
         {
-            productTypesCollection.InsertManyAsync(GetPreconfigurationProductTypes());
+            productTypeCollection.InsertManyAsync(GetPreconfigurationProductTypes());
         }
 
-        // add product images
-        bool existingProductImage = productImageCollection.Find(pi => true).Any();
-        if (!existingProductImage)
+        // add categories
+        bool existingCategory = categoryCollection.Find(c => true).Any();
+        if (!existingCategory)
         {
-            productImageCollection.InsertManyAsync(GetPreconfigurationImages());
+            categoryCollection.InsertManyAsync(GetPreconfigurationCategories());
+        }
+
+        // add product pictures
+        bool existingPictue = pictureCollection.Find(p => true).Any();
+        if (!existingPictue)
+        {
+            pictureCollection.InsertManyAsync(GetPreconfigurationPictures());
         }
     }
 
-    private static IEnumerable<ProductBrand> GetPreconfigurationProductBrands()
+    private static IEnumerable<ProductManufacturer> GetPreconfigurationProductManufacturers()
     {
-        return new List<ProductBrand>()
+        return new List<ProductManufacturer>()
         {
             new() { Id = "658d0b83a0611f637d3d967d", Name = "Google"}, // 1, 
             new() { Id = "658d0bc78426af4cf52f12f6", Name = "Samsung"}, // 2, 10
@@ -72,9 +81,31 @@ public class CatalogContextSeed
         };
     }
 
-    private static IEnumerable<ProductImage> GetPreconfigurationImages()
+    private static IEnumerable<Category> GetPreconfigurationCategories()
     {
-        return new List<ProductImage>()
+        return new List<Category>()
+        {
+            new() 
+            { 
+                Id = "65db49f1b470bc25b440fc5f", 
+                Name = "Electronics", 
+                ProductTypeIds = new List<string> 
+                {
+                    "658d0e66d210722f633a9111", 
+                    "658d0e7d1df62ce8d5eda34f", 
+                    "658d0e99d3c9907da9ba65ab", 
+                    "658d0eb277372fcc25e8cdca", 
+                    "658d0f2daa79f1fbfda6ecbb", 
+                    "658d0f4ee6543d4fc5d8c7d2", 
+                    "658d0f74003925fffa7535d8"
+                } 
+            }
+        };
+    }
+
+    private static IEnumerable<Picture> GetPreconfigurationPictures()
+    {
+        return new List<Picture>()
         {
             new() { Id = "65a0dd2741113178543d839b", IsMain = true, ProductId = "602d2149e773f2a3990b47f5", Name = "product-pixel-4a.png" }, // 1
             new() { Id = "65a0dd5368dc554a4d2c0214", IsMain = true, ProductId = "657ad1c3566d0e35563eaa2c", Name = "product-samsung-vr.png" }, // 2
@@ -102,11 +133,11 @@ public class CatalogContextSeed
                 Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("Google Pixel 4a 128Gb Barely Blue"),
-                Images =  new List<ProductImage>()
+                Pictures =  new List<Picture>()
                 {
                     new() { Id = "65a0dd2741113178543d839b", IsMain = true, ProductId = "602d2149e773f2a3990b47f5", Name = "product-iphone-yellow.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0b83a0611f637d3d967d", Name ="Google" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0b83a0611f637d3d967d", Name ="Google" },
                 Type = new ProductType() { Id = "658d0e66d210722f633a9111", Name = "Smartphones" },
                 Price = 349
             },
@@ -117,11 +148,11 @@ public class CatalogContextSeed
                 Summary = "This headset is the company's biggest change to its flagship headset in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("Samsung Gear VR Headset"),
-                Images =  new List<ProductImage>()
+                Pictures =  new List<Picture>()
                 {
                     new() { Id = "65a0dd5368dc554a4d2c0214", IsMain = true, ProductId = "657ad1c3566d0e35563eaa2c", Name = "product-samsung-vr.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0bc78426af4cf52f12f6", Name ="Samsung" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0bc78426af4cf52f12f6", Name ="Samsung" },
                 Type = new ProductType() { Id = "658d0e7d1df62ce8d5eda34f", Name = "VR Headsets" },
                 Price = 399
             },
@@ -132,12 +163,12 @@ public class CatalogContextSeed
                 Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("Apple iPhone 11 128Gb Yellow"),
-                Images =  new List<ProductImage>()
+                Pictures = new List<Picture>
                 {
                     new() { Id = "65a0ddcc6d6340372dd0c657", IsMain = true, ProductId = "602d2149e773f2a3990b47f6", Name = "product-iphone-yellow.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0c68a7003d045293dc8b", Name = "Apple" },
-                Type = new ProductType() { Id = "658d0e66d210722f633a9111", Name = "Smartphones" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0c68a7003d045293dc8b", Name = "Apple" },
+                Type = new ProductType { Id = "658d0e66d210722f633a9111", Name = "Smartphones" },
                 Price = 699
             },
             new() // 4
@@ -147,12 +178,12 @@ public class CatalogContextSeed
                 Summary = "This laptop is the company's biggest change to its flagship laptop in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("Apple MacBook Pro 14 1Tb Silver"),
-                Images =  new List<ProductImage>()
+                Pictures = new List<Picture>
                 {
                     new() { Id = "65a0de35ed427d4f905feebd", IsMain = true, ProductId = "602d2149e773f2a3990b47f7", Name = "product-macbook-pro-14.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0c68a7003d045293dc8b", Name = "Apple" } ,
-                Type = new ProductType() { Id = "658d0e99d3c9907da9ba65ab", Name = "Laptops" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0c68a7003d045293dc8b", Name = "Apple" } ,
+                Type = new ProductType { Id = "658d0e99d3c9907da9ba65ab", Name = "Laptops" },
                 Price = 2399
             },
             new() // 5
@@ -162,12 +193,12 @@ public class CatalogContextSeed
                 Summary = "This earphone is the company's biggest change to its flagship headphone in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("JBL Tune TWS Blue"),
-                Images =  new List<ProductImage>()
+                Pictures = new List<Picture>
                 {
                     new() { Id = "65a0de611b7a6d40a8150e69", IsMain = true, ProductId = "602d2149e773f2a3990b47f8", Name = "product-jbl-earphones.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0c9047336208363af181", Name = "JBL" } ,
-                Type = new ProductType() { Id = "658d0eb277372fcc25e8cdca", Name = "Headphones" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0c9047336208363af181", Name = "JBL" } ,
+                Type = new ProductType { Id = "658d0eb277372fcc25e8cdca", Name = "Headphones" },
                 Price = 89
             },
             new() // 6
@@ -177,12 +208,12 @@ public class CatalogContextSeed
                 Summary = "This watch is the company's biggest change to its flagship smartwatch in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("Apple Watch 7 Aluminum 45mm"),
-                Images =  new List<ProductImage>()
+                Pictures = new List<Picture>
                 {
                     new() { Id = "65a0dedef0fe39d079bc2573", IsMain = true, ProductId = "602d2149e773f2a3990b47f9", Name = "product-apple-watch.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0c68a7003d045293dc8b", Name = "Apple" },
-                Type = new ProductType() { Id = "658d0f2daa79f1fbfda6ecbb", Name = "Smartwatches" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0c68a7003d045293dc8b", Name = "Apple" },
+                Type = new ProductType { Id = "658d0f2daa79f1fbfda6ecbb", Name = "Smartwatches" },
                 Price = 399
             },
             new() // 7
@@ -192,12 +223,12 @@ public class CatalogContextSeed
                 Summary = "This speaker is the company's biggest change to its flagship speaker in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("Sony Smart Speaker"),
-                Images =  new List<ProductImage>()
+                Pictures = new List<Picture>
                 {
                     new() { Id = "65a0df3e3f16e6edc732d20e", IsMain = true, ProductId = "602d2149e773f2a3990b47fa", Name = "product-sony-speaker.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0cbb87e31ebe5ce03432", Name = "Sony" },
-                Type = new ProductType() { Id = "658d0f4ee6543d4fc5d8c7d2", Name = "Speakers" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0cbb87e31ebe5ce03432", Name = "Sony" },
+                Type = new ProductType { Id = "658d0f4ee6543d4fc5d8c7d2", Name = "Speakers" },
                 Price = 49
             },
             new() // 8
@@ -207,12 +238,12 @@ public class CatalogContextSeed
                 Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("Xiaomi Redmi Note 10S 128Gb Pebble White"),
-                Images =  new List<ProductImage>()
+                Pictures = new List<Picture>
                 {
                     new() { Id = "65a0e0094d3a0a0f649ddbf6", IsMain = true, ProductId = "657ad0de6a6adbe854952c7f", Name = "product-redmi-note.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0c0b01d4b9826c21fb87", Name = "Xiaomi" },
-                Type = new ProductType() { Id = "658d0e66d210722f633a9111", Name = "Smartphones" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0c0b01d4b9826c21fb87", Name = "Xiaomi" },
+                Type = new ProductType { Id = "658d0e66d210722f633a9111", Name = "Smartphones" },
                 Price = 349
             },
             new() // 9
@@ -222,12 +253,12 @@ public class CatalogContextSeed
                 Summary = "This laptop is the company's biggest change to its flagship laptop in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("Dell Latitude 5420 Ultrabook"),
-                Images =  new List<ProductImage>()
+                Pictures = new List<Picture>
                 {
                     new() { Id = "65a0e0864d6b8dda9ac403d7", IsMain = true, ProductId = "657ad1514d6a4e8ab3a72f11", Name = "product-dell-latitude.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0cda23031a268eabb951", Name = "Dell" },
-                Type = new ProductType() { Id = "658d0e99d3c9907da9ba65ab", Name = "Laptops" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0cda23031a268eabb951", Name = "Dell" },
+                Type = new ProductType { Id = "658d0e99d3c9907da9ba65ab", Name = "Laptops" },
                 Price = 1299
             },
             new() // 10
@@ -237,12 +268,12 @@ public class CatalogContextSeed
                 Summary = "This tablet is the company's biggest change to its flagship tablet in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("Samsung Galaxy Tab S6"),
-                Images =  new List<ProductImage>()
+                Pictures = new List<Picture>
                 {
                     new() { Id = "65a0e0d2f578d4796459024d", IsMain = true, ProductId = "657ad6f91933a7c9b643a921", Name = "product-samsung-tablet.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0bc78426af4cf52f12f6", Name = "Samasung" },
-                Type = new ProductType() { Id = "658d0f74003925fffa7535d8", Name = "Tablets" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0bc78426af4cf52f12f6", Name = "Samasung" },
+                Type = new ProductType { Id = "658d0f74003925fffa7535d8", Name = "Tablets" },
                 Price = 399
             },
             new() // 11
@@ -252,12 +283,12 @@ public class CatalogContextSeed
                 Summary = "This headphone is the company's biggest change to its flagship headphone in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("Bose QuietComphort 45"),
-                Images =  new List<ProductImage>()
+                Pictures = new List<Picture>
                 {
                     new() { Id = "65a0e10f026e60cb1f22e829", IsMain = true, ProductId = "657ad77149678fa2f87a1e0e", Name = "product-bose-headphones.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0d9fd5171dd40377ba24", Name = "Bose" },
-                Type = new ProductType() { Id = "658d0eb277372fcc25e8cdca", Name = "Headphones" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0d9fd5171dd40377ba24", Name = "Bose" },
+                Type = new ProductType { Id = "658d0eb277372fcc25e8cdca", Name = "Headphones" },
                 Price = 299
             },
             new() // 12
@@ -267,12 +298,12 @@ public class CatalogContextSeed
                 Summary = "This phone is the company's biggest change to its flagship smartphone in years. It includes a borderless.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                 SeName = SeNameGenerator("Xiaomi Redmi 10 128Gb Coral Blue"),
-                Images =  new List<ProductImage>()
+                Pictures = new List<Picture>
                 {
                     new() { Id = "65a0e11be563fc013ed8e3ba", IsMain = true, ProductId = "657ad7ca398839346546f69b", Name = "product-xiaomi-redmi.png" }
                 },
-                Brand = new ProductBrand() { Id = "658d0c0b01d4b9826c21fb87", Name = "Xiaomi" },
-                Type = new ProductType() { Id = "658d0e66d210722f633a9111", Name = "Smartphones" },
+                Manufacturer = new ProductManufacturer() { Id = "658d0c0b01d4b9826c21fb87", Name = "Xiaomi" },
+                Type = new ProductType { Id = "658d0e66d210722f633a9111", Name = "Smartphones" },
                 Price = 199
             }
         };

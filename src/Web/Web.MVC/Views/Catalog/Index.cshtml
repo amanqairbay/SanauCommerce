@@ -23,7 +23,7 @@
 <!-- Page Title -->
 
 <!-- Product Category -->
-<div class="container">
+<div class="container" id="product-list1">
     <div class="row g-lg-4">
         <!-- Sidebar -->
         <section class="col-lg-4">
@@ -37,82 +37,28 @@
                 <div class="offcanvas-body p-lg-8">
                     <!-- Categories -->
                     <div class="widget widget-categories pb-5 mb-5 border-bottom">
-                        <h3 class="widget-title">Categories</h3>
+                        <a asp-controller="Catalog" asp-action="Index"><h3 class="widget-title">Categories</h3></a>
                         <div class="accordion mt-n2" id="shop-categories">
-                            <!-- Computers -->
+                            <!-- Electronics -->
                             <div class="accordion-item">
                                 <h3 class="accordion-header">
-                                    <a class="accordion-button" href="#category-computers" role="button"
+                                    <a class="accordion-button" href="#category-electronics" role="button"
                                         data-bs-toggle="collapse" aria-expanded="true"
-                                        aria-controls="category-computers">Computers</a>
+                                        aria-controls="category-electronics">Electronics</a>
                                 </h3>
-                                <div class="accordion-collapse collapse show" id="category-computers" data-bs-parent="#shop-categories">
+                                <div class="accordion-collapse collapse show" id="category-electronics" data-bs-parent="#shop-categories">
                                     <div class="accordion-body">
                                         <div class="widget widget-links border-start">
                                             <ul class="widget-list">
-                                                <li class="widget-list-item border-bottom pb-2">
-                                                    <a class="widget-list-link d-flex justify-content-between align-items-center"
-                                                        href="#">
-                                                        <span>Accessories</span>
-                                                        <span class="fs-xs text-muted ms-2">414</span>
-                                                    </a>
-                                                </li>
-                                                <li class="widget-list-item border-bottom pb-2">
-                                                    <a class="widget-list-link d-flex justify-content-between align-items-center"
-                                                        href="#">
-                                                        <span>Computer Cases</span>
-                                                        <span class="fs-xs text-muted ms-2">138</span>
-                                                    </a>
-                                                </li>
-                                                <li class="widget-list-item border-bottom pb-2">
-                                                    <a class="widget-list-link d-flex justify-content-between align-items-center"
-                                                        href="#">
-                                                        <span>Processors</span>
-                                                        <span class="fs-xs text-muted ms-2">162</span>
-                                                    </a>
-                                                </li>
-                                                <li class="widget-list-item border-bottom pb-2">
-                                                    <a class="widget-list-link d-flex justify-content-between align-items-center"
-                                                        href="#">
-                                                        <span>Video Cards</span>
-                                                        <span class="fs-xs text-muted ms-2">235</span>
-                                                    </a>
-                                                </li>
-                                                <li class="widget-list-item border-bottom pb-2">
-                                                    <a class="widget-list-link d-flex justify-content-between align-items-center"
-                                                        href="#">
-                                                        <span>Memory</span>
-                                                        <span class="fs-xs text-muted ms-2">245</span>
-                                                    </a>
-                                                </li>
-                                                <li class="widget-list-item border-bottom pb-2">
-                                                    <a class="widget-list-link d-flex justify-content-between align-items-center"
-                                                        href="#">
-                                                        <span>Motherboards</span>
-                                                        <span class="fs-xs text-muted ms-2">189</span>
-                                                    </a>
-                                                </li>
-                                                <li class="widget-list-item border-bottom pb-2">
-                                                    <a class="widget-list-link d-flex justify-content-between align-items-center"
-                                                        href="#">
-                                                        <span>Power Supplies</span>
-                                                        <span class="fs-xs text-muted ms-2">228</span>
-                                                    </a>
-                                                </li>
-                                                <li class="widget-list-item border-bottom pb-2">
-                                                    <a class="widget-list-link d-flex justify-content-between align-items-center"
-                                                        href="#">
-                                                        <span>Sound Cards</span>
-                                                        <span class="fs-xs text-muted ms-2">92</span>
-                                                    </a>
-                                                </li>
-                                                <li class="widget-list-item">
-                                                    <a class="widget-list-link d-flex justify-content-between align-items-center"
-                                                        href="#">
-                                                        <span>Other</span>
-                                                        <span class="fs-xs text-muted ms-2">267</span>
-                                                    </a>
-                                                </li>
+                                                @foreach (var type in Model.ProductTypes)
+                                                {
+                                                    <li class="widget-list-item border-bottom pb-2">
+                                                        <a class="widget-list-link d-flex justify-content-between align-items-center" asp-controller="Catalog" asp-action="Index" asp-route-category="@type.Id">
+                                                            <span>@type.Name</span>
+                                                            <span class="fs-xs text-muted ms-2">@Model.ProductTypes.Count(pt => pt.Name == type.Name)</span>
+                                                        </a>
+                                                    </li>
+                                                }
                                             </ul>
                                         </div>
                                     </div>
@@ -382,235 +328,20 @@
                             <input class="widget-filter-input form-control" type="text" placeholder="Search">
                             <span class="input-group-text" id="blog-search-addon"><i class="ri-search-line"></i></span>
                         </div>
-                        <ul class="widget-list widget-filter-list pt-1" style="height: 15rem;" data-simplebar
-                            data-simplebar-auto-hide="false">
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-apple">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-apple">Apple</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">167</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-asus">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-asus">Asus</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">52</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-dell">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-dell">Dell</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">38</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-gigabyte">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-gigabyte">Gigabyte</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">124</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-intel">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-intel">Intel</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">268</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-msi">
-                                    <label class="form-check-label widget-filter-item-label" for="brand-msi">MSI</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">98</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-vinga">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-vinga">Vinga</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">311</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-acer">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-acer">Acer</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">160</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-artline">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-artline">Artline</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">46</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-evolve">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-evolve">Evolve</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">23</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-hp">
-                                    <label class="form-check-label widget-filter-item-label" for="brand-hp">HP</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">76</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-lenovo">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-lenovo">Lenovo</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">168</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-samsung">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-samsung">Samsung</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">25</span>
-                            </li>
-                            <li class="widget-filter-item d-flex justify-content-between align-items-center">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="brand-zotac">
-                                    <label class="form-check-label widget-filter-item-label"
-                                        for="brand-zotac">Zotac</label>
-                                </div>
-                                <span class="fs-xs text-muted ms-2">184</span>
-                            </li>
+                        <ul class="widget-list widget-filter-list pt-1" style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
+                            @foreach (var brand in Model.ProductBrands)
+                            {
+                                <li class="widget-filter-item d-flex justify-content-between align-items-center mb-1">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="brands" value="@brand.Id" id="@brand.Id">
+                                        <label class="form-check-label widget-filter-item-label" for="@brand.Id">@brand.Name</label>
+                                    </div>
+                                    <span class="fs-xs text-muted ms-2">167</span>
+                                </li>
+                            }
                         </ul>
                     </div>
                     <!-- Brand -->
-
-                    <!-- Trend -->
-                    <div class="widget pb-5 mb-5 border-bottom">
-                        <h3 class="widget-title">Trend</h3>
-                        <ul class="widget-list pt-1">
-                            <li class="mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="trend-powerful">
-                                    <label class="form-check-label" for="trend-powerful">Powerful</label>
-                                </div>
-                            </li>
-                            <li class="mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="trend-intel">
-                                    <label class="form-check-label" for="trend-intel">Intel Platform</label>
-                                </div>
-                            </li>
-                            <li class="mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="trend-gaming">
-                                    <label class="form-check-label" for="trend-gaming">Gaming</label>
-                                </div>
-                            </li>
-                            <li class="mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="trend-office">
-                                    <label class="form-check-label" for="trend-office">Office</label>
-                                </div>
-                            </li>
-                            <li class="mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="trend-image">
-                                    <label class="form-check-label" for="trend-image">Image</label>
-                                </div>
-                            </li>
-                            <li class="mb-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="trend-image">
-                                    <label class="form-check-label" for="trend-image">Ultrathin</label>
-                                </div>
-                            </li>
-                            <li class="mb-0">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="trend-autonomy">
-                                    <label class="form-check-label" for="trend-autonomy">Good Autonomy</label>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <!-- Trend -->
-
-                    <!-- Color -->
-                    <div class="widget">
-                        <h3 class="widget-title">Color</h3>
-                        <div class="d-flex flex-wrap">
-                            <div class="form-check form-option form-check-inline text-center">
-                                <input class="form-check-input" type="radio" name="radioColor2" id="color10" checked>
-                                <label class="form-option-label rounded-circle" for="color10">
-                                    <span class="form-option-color rounded-circle" title="Blue"
-                                        style="background-color: #9ab2f8;"></span>
-                                </label>
-                            </div>
-                            <div class="form-check form-option form-check-inline text-center">
-                                <input class="form-check-input" type="radio" name="radioColor2" id="color11">
-                                <label class="form-option-label rounded-circle" for="color11">
-                                    <span class="form-option-color rounded-circle" title="Red"
-                                        style="background-color: #f58c8c;"></span>
-                                </label>
-                            </div>
-                            <div class="form-check form-option form-check-inline text-center">
-                                <input class="form-check-input" type="radio" name="radioColor2" id="color12">
-                                <label class="form-option-label rounded-circle" for="color12">
-                                    <span class="form-option-color rounded-circle" title="Orange"
-                                        style="background-color: #f5ad8c;"></span>
-                                </label>
-                            </div>
-                            <div class="form-check form-option form-check-inline text-center">
-                                <input class="form-check-input" type="radio" name="radioColor2" id="color13">
-                                <label class="form-option-label rounded-circle" for="color13">
-                                    <span class="form-option-color rounded-circle" title="Yellow"
-                                        style="background-color: #f5e58c;"></span>
-                                </label>
-                            </div>
-                            <div class="form-check form-option form-check-inline text-center">
-                                <input class="form-check-input" type="radio" name="radioColor2" id="color14">
-                                <label class="form-option-label rounded-circle" for="color14">
-                                    <span class="form-option-color rounded-circle" title="Green"
-                                        style="background-color: #85e299;"></span>
-                                </label>
-                            </div>
-                            <div class="form-check form-option form-check-inline text-center">
-                                <input class="form-check-input" type="radio" name="radioColor2" id="color15">
-                                <label class="form-option-label rounded-circle" for="color15">
-                                    <span class="form-option-color rounded-circle" title="Silver"
-                                        style="background-color: #e8e9ee;"></span>
-                                </label>
-                            </div>
-                            <div class="form-check form-option form-check-inline text-center">
-                                <input class="form-check-input" type="radio" name="radioColor2" id="color16">
-                                <label class="form-option-label rounded-circle" for="color16">
-                                    <span class="form-option-color rounded-circle" title="White"
-                                        style="background-color: #fcfcfd;"></span>
-                                </label>
-                            </div>
-                            <div class="form-check form-option form-check-inline text-center">
-                                <input class="form-check-input" type="radio" name="radioColor2" id="color17">
-                                <label class="form-option-label rounded-circle" for="color17">
-                                    <span class="form-option-color rounded-circle" title="Black"
-                                        style="background-color: #676769;"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Color -->
                 </div>
             </div>
         </section>
@@ -657,11 +388,11 @@
             </div>
             <!-- Toolbar -->
 
-            <div class="tab-content" id="pills-tabContent">
+            <div class="tab-content">
                 <!-- Product Grid -->
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div class="tab-pane fade show active">
                     <!-- Product Cards -->
-                    <div class="row pt-2 mx-n2 mb-4 mb-sm-8">
+                    <div class="row pt-2 mx-n2 mb-4 mb-sm-8" id="product-list">
 
                         @if (Model.Products.Count() > 0)
                         {
@@ -676,12 +407,11 @@
                             }
 
                             <hr class="d-none d-sm-block mb-6">
-
-                            <!-- Pagination -->
-                            <partial name="_pagination" for="PaginationInfo" />
-                            <!-- Pagination -->
                         }
 
+                        <!-- Pagination -->
+                        <partial name="_pagination" for="PaginationInfo" />
+                        <!-- Pagination -->
                     </div>
                     <!-- Product Cards -->
                 </div>
@@ -692,3 +422,31 @@
     </div>
 </div>
 <!-- Product Category -->
+
+@section Scripts 
+{
+    <script>
+        // Handle checkbox change event
+        $('input[type="checkbox"][name="brands"]').on('change', function() {
+            var selectedBrands = $('input[type="checkbox"][name="brands"]:checked').map(function() {
+                return $(this).val();
+            }).get();
+
+            // Send AJAX request to retrieve filtered product data
+            $.ajax({
+                url: '@Url.Action("GetProducts", "Catalog")',
+                type: 'POST',
+                dataType: 'html',
+                data: {
+                    brand: selectedBrands
+                },
+                success: function (result) {
+                    $('#product-list').html(result);
+                },
+                error: function () {
+                    console.log('An error occurred while retrieving filtered product data.');
+                }
+            });
+        });
+    </script>
+}

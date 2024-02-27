@@ -1,6 +1,7 @@
 using AutoMapper;
-using Catalog.Application.Features.ProductFeatures.Commands.UpdateProduct;
-using Catalog.Application.Features.ProductImageFeatures.Commands.CreateProductImage;
+using Catalog.Application.Features.Photos.Commands.CreatePhoto;
+using Catalog.Application.Features.Products.Commands.CreateProduct;
+using Catalog.Application.Features.Products.Commands.UpdateProduct;
 using Catalog.Application.Responses;
 using Catalog.Core.Entities;
 using Catalog.Core.RequestFeatures;
@@ -19,10 +20,10 @@ public sealed class CatalogProfile : Profile
         CreateMap<Product, CreateProductCommand>().ReverseMap();
         CreateMap<Product, UpdateProductCommand>().ReverseMap();
 
-        CreateMap<ProductImage, ProductImageResponse>().ReverseMap();
-        CreateMap<ProductImage, CreateProductImageCommand>().ReverseMap();
+        CreateMap<Photo, PhotoResponse>().ReverseMap();
+        CreateMap<Photo, CreatePhotoCommand>().ReverseMap();
 
-        CreateMap<ProductType, ProductTypeResponse>().ReverseMap();
-        CreateMap<ProductBrand, ProductBrandResponse>().ReverseMap();
+        CreateMap<Category, CategoryResponse>().ReverseMap();
+        CreateMap<Brand, BrandResponse>().ReverseMap();
     }
 }

@@ -44,19 +44,19 @@ public class ProductResponse
     /// Gets or sets a brand.
     /// </summary>
     [BsonElement("Brand")]
-    public ProductBrand Brand { get; set; } = default!;
+    public Brand Brand { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets a type.
     /// </summary>
-    [BsonElement("Type")]
-    public ProductType Type { get; set; } = default!;
+    [BsonElement("Category")]
+    public Category Category { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets images.
     /// </summary>
-    [BsonElement("Images")]
-    public ICollection<ProductImage> Images { get; set; } = default!; 
+    [BsonElement("Photos")]
+    public ICollection<Photo> Photos { get; set; } = default!; 
 
     /// <summary>
     /// Gets or sets a price.

@@ -1,6 +1,6 @@
-using Catalog.Application.Features.ProductFeatures.Commands.UpdateProduct;
-using Catalog.Core.Logging;
-using Catalog.Core.Repositories;
+using Catalog.Application.Contracts.Persistence;
+using Catalog.Application.Features.Products.Commands.CreateProduct;
+using Catalog.Domain.Logging;
 using Catalog.Infrastructure.Logging;
 using Catalog.Infrastructure.Repositories;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -37,4 +37,14 @@ public static class CatalogServicesExtensions
     public static void AddRepositoryManagerConfigure(this IServiceCollection services) =>
         services.AddScoped<IRepositoryManager, RepositoryManager>();
 
+    // Identity
+    public static void AddIdentityConfigure(this IServiceCollection services) 
+    {
+        services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options => 
+                {
+                    options.Authority = "https://localhost:5005";
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters{ ValidateAudience = false };
+                });
+    }
 }

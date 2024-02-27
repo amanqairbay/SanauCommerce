@@ -1,19 +1,22 @@
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using Catalog.Application.Features.ProductFeatures.Commands.DeleteProduct;
-using Catalog.Application.Features.ProductFeatures.Commands.UpdateProduct;
-using Catalog.Application.Features.ProductFeatures.Queries.GetProductById;
-using Catalog.Application.Features.ProductFeatures.Queries.GetProductByName;
-using Catalog.Application.Features.ProductFeatures.Queries.GetProductByType;
-using Catalog.Application.Features.ProductFeatures.Queries.GetProductList;
-using Catalog.Application.Features.ProductFeatures.Queries.GetProductPagedList;
 using Catalog.Application.Responses;
 using Catalog.Core.RequestFeatures;
 using MediatR;
-using Catalog.Application.Features.ProductFeatures.Queries.GetProductBySeName;
+using Catalog.Application.Features.Products.Commands.CreateProduct;
+using Catalog.Application.Features.Products.Commands.DeleteProduct;
+using Catalog.Application.Features.Products.Commands.UpdateProduct;
+using Catalog.Application.Features.Products.Queries.GetProductById;
+using Catalog.Application.Features.Products.Queries.GetProductByName;
+using Catalog.Application.Features.Products.Queries.GetProductBySeName;
+using Catalog.Application.Features.Products.Queries.GetProductByCategory;
+using Catalog.Application.Features.Products.Queries.GetProductPagedList;
+using Catalog.Application.Features.Products.Queries.GetProductList;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Catalog.API.Controllers;
 
+[Authorize]
 public class ProductController : ApiController
 {
     private readonly IMediator _mediator;
@@ -77,12 +80,12 @@ public class ProductController : ApiController
     }
 
     // GET: api/v1/[controller]/type/{type}
-    [HttpGet("type/{type:minlength(1)}", Name = "GetByType")]
+    [HttpGet("category/{categoryId:minlength(1)}", Name = "GetByCategory")]
     [ProducesResponseType((int)HttpStatusCode.NotFound)]
     [ProducesResponseType(typeof(ProductResponse), (int)HttpStatusCode.OK)]
-    public async Task<IActionResult> GetProductByTypeAsync(string type)
+    public async Task<IActionResult> GetProductByCategoryAsync(string categoryId)
     {
-        var products = await _mediator.Send(new GetProductByTypeQuery(type));
+        var products = await _mediator.Send(new GetProductByCategoryQuery(categoryId));
         
         return Ok(products);
     }

@@ -1,4 +1,5 @@
-using Catalog.Core.Entities;
+
+using Catalog.Domain.Entities;
 using MongoDB.Driver;
 
 namespace Catalog.Infrastructure.Data;
@@ -14,17 +15,22 @@ public interface ICatalogContext
     IMongoCollection<Product> Products { get; }
 
     /// <summary>
-    /// Gets the product brands.
+    /// Gets the product manufacturers.
     /// </summary>
-    IMongoCollection<ProductBrand> ProductBrands { get; }
+    IMongoCollection<ProductManufacturer> ProductManufacturers { get; }
 
     /// <summary>
-    /// Gets the product types.
+    /// Gets the products.
     /// </summary>
     IMongoCollection<ProductType> ProductTypes { get; }
 
     /// <summary>
-    /// Gets the product images.
+    /// Gets the product categories.
     /// </summary>
-    IMongoCollection<ProductImage> ProductImages { get; }
+    IMongoCollection<Category> Categories { get; }
+
+    /// <summary>
+    /// Gets the product pictures.
+    /// </summary>
+    IMongoCollection<Picture> Pictures { get; }
 }

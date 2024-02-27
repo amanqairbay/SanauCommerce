@@ -1,6 +1,6 @@
-using Catalog.Core.Entities;
-using Catalog.Core.Repositories;
+using Catalog.Application.Contracts.Persistence;
 using Catalog.Core.RequestFeatures;
+using Catalog.Domain.Entities;
 using Catalog.Infrastructure.Data;
 using MongoDB.Driver;
 
@@ -55,17 +55,17 @@ public class ProductRepository : IProductRepository
             //filter &= builder.Regex(p => p.Name, new BsonRegularExpression(productParams.SearchTerm));
         }
 
-        if (productParams.BrandId != null)
+        if (productParams.ProductManufacturerId != null)
         {
             //filter &= builder.Eq(p => p.Brand.Id, productParams.BrandId);
-            foreach (var brandId in productParams.BrandId)
+            foreach (var productManufacturerId in productParams.ProductManufacturerId)
             {
-                filter &= builder.Where(p => productParams.BrandId.Contains(p.Brand.Id));
+                filter &= builder.Where(p => productParams.ProductManufacturerId.Contains(p.Manufacturer.Id));
             }
         }
 
-        if (!string.IsNullOrEmpty(productParams.TypeId))
-            filter &= builder.Eq(p => p.Type.Id, productParams.TypeId);
+        if (!string.IsNullOrEmpty(productParams.ProductTypeId))
+            filter &= builder.Eq(p => p.ProductType.Id, productParams.ProductTypeId);
 
         if (!string.IsNullOrEmpty(productParams.Sort))
         {
@@ -190,7 +190,7 @@ public class ProductRepository : IProductRepository
     /// </returns>
     public async Task<IReadOnlyList<Product>> GetByTypeAsync(string typeId)
     {
-        FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.Type.Id, typeId);
+        FilterDefinition<Product> filter = Builders<Product>.Filter.Eq(p => p.ProductType.Id, typeId);
         
         return await _context
                 .Products

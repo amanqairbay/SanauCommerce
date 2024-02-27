@@ -36,19 +36,19 @@ public class Product : BaseEntity
     /// Gets or sets a product brand.
     /// </summary>
     [BsonElement("Brand")]
-    public ProductBrand Brand { get; set; } = default!;
+    public Brand Brand { get; set; } = default!;
 
     /// <summary>
-    /// Gets or sets a product type.
+    /// Gets or sets a product category.
     /// </summary>
-    [BsonElement("Type")]
-    public ProductType Type { get; set; } = default!;
+    [BsonElement("Category")]
+    public Category Category { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets images.
     /// </summary>
-    [BsonElement("Images")]
-    public List<ProductImage> Images { get; set; } = default!;
+    [BsonElement("Photos")]
+    public List<Photo> Photos { get; set; } = default!;
 
     /// <summary>
     /// Gets or sets a price.

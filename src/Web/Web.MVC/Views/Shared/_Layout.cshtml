@@ -17,7 +17,188 @@
 <body>
     <!-- Wrapper -->
     <div class="wrapper">
-        @RenderBody()
+        <!-- Page -->
+        <main class="page">
+            <!-- Product Quick View Modal -->
+            <div class="modal fade" id="modal-quick-view" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title product-title fs-4">
+                                <a href="#">Apple Watch 7</a>
+                            </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row g-4">
+                                <!-- Product gallery -->
+                                <div class="col-lg-7">
+                                    <div class="swiper-gallery">
+                                        <div class="swiper swiper-gallery-body product-gallery">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide">
+                                                    <div class="swiper-gallery-image">
+                                                        <img src="~/img/product-gallery/big-01.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <div class="swiper-gallery-image">
+                                                        <img src="~/img/product-gallery/big-02.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <div class="swiper-gallery-image">
+                                                        <img src="~/img/product-gallery/big-03.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <div class="swiper-gallery-image">
+                                                        <img src="~/img/product-gallery/big-04.png" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div thumbsSlider="" class="swiper swiper-gallery-body product-gallery-thumbs">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide">
+                                                    <div class="swiper-gallery-thumb-image">
+                                                        <img src="~/img/product-gallery/thumb-01.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <div class="swiper-gallery-thumb-image">
+                                                        <img src="~/img/product-gallery/thumb-02.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <div class="swiper-gallery-thumb-image">
+                                                        <img src="~/img/product-gallery/thumb-03.png" />
+                                                    </div>
+                                                </div>
+                                                <div class="swiper-slide">
+                                                    <div class="swiper-gallery-thumb-image">
+                                                        <img src="~/img/product-gallery/thumb-04.png" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Product gallery -->
+
+                                <!-- Product details -->
+                                <div class="col-lg-5">
+                                    <div class="product-details">
+                                        <div class="d-flex align-items-center mb-2">
+                                            <span class="star-rating star-8 fs-6 align-middle"></span>
+                                            <span class="d-inline-block fs-sm ms-2">4.7 by 35 Reviews</span>
+                                        </div>
+
+                                        <!-- Product Price -->
+                                        <div class="product-price mb-3">
+                                            <div class="row g-2">
+                                                <div class="col-auto d-flex flex-column justify-content-center">
+                                                    <span class="text-accent fs-2">$349</span>
+                                                </div>
+                                                <div class="col d-flex flex-column justify-content-center">
+                                                    <del class="text-muted"><span class="fs-sm">$499</span></del>
+                                                    <span class="text-danger fs-sm mt-n1">You save 30% (150$)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Product Price -->
+
+                                        <!-- Color Picker -->
+                                        <h5 class="h6 mb-2">Color</h5>
+                                        <div class="mb-3">
+                                            <div class="form-check form-option form-check-inline">
+                                                <input class="form-check-input" type="radio" name="radioColor" id="color1" checked>
+                                                <label class="form-option-label rounded-circle" for="color1">
+                                                    <span class="form-option-color rounded-circle" style="background-color: #d1d7eb;"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-option form-check-inline">
+                                                <input class="form-check-input" type="radio" name="radioColor" id="color2">
+                                                <label class="form-option-label rounded-circle" for="color2">
+                                                    <span class="form-option-color rounded-circle" style="background-color: #f4e1a2;"></span>
+                                                </label>
+                                            </div>
+                                            <div class="form-check form-option form-check-inline">
+                                                <input class="form-check-input" type="radio" name="radioColor" id="color3">
+                                                <label class="form-option-label rounded-circle" for="color3">
+                                                    <span class="form-option-color rounded-circle" style="background-color: #ffdcff;"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <!-- Color Picker -->
+
+                                        <div class="d-flex align-items-center">
+                                            <!-- Quantity Products -->
+                                            <div class="quantity-products me-3">
+                                                <button class="quantity-btn-minus"><i class="ri-subtract-line"></i></button>
+                                                <input class="quantity-number" type="number" value="1" />
+                                                <button class="quantity-btn-plus"><i class="ri-add-line"></i></button>
+                                            </div>
+                                            <!-- Quantity Products -->
+
+                                            <!-- Button -->
+                                            <button class="btn btn-primary d-flex align-items-center justify-content-center w-100" type="button">
+                                                <i class="ri-shopping-cart-2-line"></i>
+                                                <span class="d-none d-sm-inline ms-2">Add to Cart</span>
+                                            </button>
+                                            <!-- Button -->
+                                        </div>
+
+                                        <!-- Buttons -->
+                                        <div class="d-flex pt-2 mb-4">
+                                            <div class="w-50 me-3">
+                                                <button class="btn btn-secondary d-block w-100" type="button">
+                                                    <span class="d-none d-sm-inline">Add to </span>
+                                                    Wishlist
+                                                </button>
+                                            </div>
+                                            <div class="w-50">
+                                                <button class="btn btn-secondary d-block w-100" type="button">
+                                                    Compare
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- Buttons -->
+
+                                        <!-- Info List -->
+                                        <h5 class="h6 mb-3 py-2 border-bottom"><i class="ri-information-line text-muted fs-lg align-middle mt-n1 me-2"></i>Product information</h5>
+
+                                        <h6 class="fs-sm mb-2">General</h6>
+
+                                        <ul class="fs-sm pb-2">
+                                            <li><span class="text-muted">Type: </span>Smart Watch</li>
+                                            <li><span class="text-muted">Connection: </span>Bluetooth 5.0</li>
+                                            <li><span class="text-muted">OS: </span>WatchOS</li>
+                                        </ul>
+
+                                        <h6 class="fs-sm mb-2">Powering</h6>
+
+                                        <ul class="fs-sm mb-0">
+                                            <li><span class="text-muted">Chargering: </span>Wireless</li>
+                                            <li><span class="text-muted">Battery: </span>Li-Ion</li>
+                                            <li><span class="text-muted">Battery life: </span>18 hours</li>
+                                        </ul>
+                                        <!-- Info List -->
+                                    </div>
+                                </div>
+                                <!-- Product details -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product Quick View Modal -->
+            @await Html.PartialAsync("_Header")
+
+            @RenderBody()
+
+        </main>
+        <!-- Page -->
 
         <!-- Footer -->
         <footer class="footer">
@@ -185,6 +366,7 @@
     <!-- Wrapper -->
 
     <!-- Scripts -->
+    <script src="~/jquery/dist/jquery.min.js"></script>
     <script src="~/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/vendors/swiper/swiper-bundle.min.js"></script>
     <script src="~/vendors/simplebar/dist/simplebar.min.js"></script>
